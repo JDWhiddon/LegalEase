@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PracticeManagement.MAUI.Views.EmployeeDetailView"
+             Title="EmployeeDetailView"
+             NavigatedTo="OnArrived">
+    <VerticalStackLayout>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="11*"/>
+            </Grid.ColumnDefinitions>
+            <Label Grid.Column="0"
+            Text="Name"/>
+            <Entry Grid.Column="1" Text="{Binding Path=Model.Name}"/>
+        </Grid>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="11*"/>
+            </Grid.ColumnDefinitions>
+            <Label Grid.Column="0"
+            Text="Rate"/>
+            <Entry Grid.Column="1" Text="{Binding Path=Model.Rate}"/>
+        </Grid>
+        
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="0" Text="Ok" Clicked="OkClicked"></Button>
+            <Button Grid.Column="1" Text="Go Back" Clicked="CancelClicked"></Button>
+        </Grid>
+    </VerticalStackLayout>
+</ContentPage>

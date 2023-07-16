@@ -27,15 +27,15 @@ public partial class EmployeeView : ContentPage
 
     private void AddClicked(object sender, EventArgs e)
     {
-        Shell.Current.GoToAsync("//ClientDetails");
+        Shell.Current.GoToAsync("//EmployeeDetails");
     }
     private void EditClicked(object sender, EventArgs e)
     {
-        //(BindingContext as EmployeeViewModel).Edit();
+        (BindingContext as EmployeeViewModel).Edit();
     }
 
     private void OnArrived(object sender, NavigatedToEventArgs e)
     {
-        //(BindingContext as ClientViewModel).RefreshEmployeeList();
+        (BindingContext as EmployeeViewModel).RefreshEmployeeList();
     }
 }

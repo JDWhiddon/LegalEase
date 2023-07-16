@@ -2,7 +2,8 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="PracticeManagement.MAUI.Views.EmployeeView"
-             Title="EmployeeView">
+             Title="EmployeeView"
+             NavigatedTo="OnArrived">
     <ScrollView>
         <Grid>
             <Grid.RowDefinitions>
@@ -34,8 +35,8 @@
                     <ColumnDefinition/>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
-                <Button Text="Edit Client" Grid.Column="0" Clicked="EditClicked"></Button>
-                <Button Text="Close Client" Grid.Column="1" Clicked="DeleteClicked"></Button>
+                <Button Text="Edit" Grid.Column="0" Clicked="EditClicked"></Button>
+                <Button Text="Delete" Grid.Column="1" Clicked="DeleteClicked"></Button>
             </Grid>
 
             <Grid Grid.Row="3">

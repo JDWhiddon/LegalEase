@@ -40,5 +40,9 @@
         Title="=Employee Management"
         ContentTemplate="{DataTemplate local7:EmployeeView}"
         Route="Employees" />
+    <ShellContent
+        Title="=Employee Details"
+        ContentTemplate="{DataTemplate local7:EmployeeDetailView}"
+        Route="EmployeeDetails" />
     
 </Shell>

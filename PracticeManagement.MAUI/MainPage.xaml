@@ -19,7 +19,7 @@
                 </Grid.ColumnDefinitions>
 
                 <Button Grid.Column="0" Text="Client View" Clicked="ClientsClicked" HorizontalOptions="CenterAndExpand"></Button>
-                <Button Grid.Column="0" Grid.Row="2" Text="Employee View" Clicked="EmployeeClicked" HorizontalOptions="CenterAndExpand"></Button>
+                <Button Grid.Column="0" Grid.Row="2" Text="Employee View" Clicked="EmployeesClicked" HorizontalOptions="CenterAndExpand"></Button>
             </Grid>
         </Grid>
     </ScrollView>
