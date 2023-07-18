@@ -178,7 +178,6 @@ namespace PracticeManagement.MAUI.ViewModels
             AddProjectCommand = new Command(
                 (c) => ExecuteAddProject());
 
-
         }
 
         public ClientViewModel(Client client)

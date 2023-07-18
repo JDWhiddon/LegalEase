@@ -16,8 +16,45 @@
             <Entry Grid.Column="1" Text="{Binding Path=Model.LongName}"/>
             
         </Grid>
-        <Button Text="Toggle Status" Command="{Binding ToggleProjectStatusCommand}"/>
-        <Button Text="OK" Command="{Binding AddOrUpdateCommand}"/>
-        <Button Text="Cancel" Clicked="CancelClicked"/>
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column ="0" Text="Toggle Active Status" Command="{Binding ToggleProjectStatusCommand}"/>
+            <Button Grid.Column ="1" Text="OK" Command="{Binding AddOrUpdateCommand}"/>
+            <Button Grid.Column ="2" Text="Cancel" Clicked="CancelClicked"/>
+        </Grid>
+
+        <ListView
+            ItemsSource="{Binding Times, Mode=TwoWay}"
+            SelectedItem="{Binding Path=SelectedTime, Mode=TwoWay}"
+            >
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="12*"/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <Label Grid.Column="0" VerticalTextAlignment="Center" Text="{Binding Display}"></Label>
+                        </Grid>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="0" Text="Delete Entry" Command="{Binding DeleteEntryCommand}"></Button>
+        <Button Grid.Column="1" Text="Add Entry" Command="{Binding TimerCommand}"></Button>
+            <Button Grid.Column="2" Text="Edit Entry" Command="{Binding EditEntryCommand}"></Button>
+        </Grid>
+
     </VerticalStackLayout>
 </ContentPage>

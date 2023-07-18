@@ -26,10 +26,12 @@ public partial class ProjectDetailView : ContentPage
         {
             BindingContext = new ProjectViewModel(ProjectId, true);
         }
+        (BindingContext as ProjectViewModel).RefreshTimes();
     }
 
     private void CancelClicked(object sender, EventArgs e)
     {
         Shell.Current.GoToAsync("//Clients");
     }
+
 }

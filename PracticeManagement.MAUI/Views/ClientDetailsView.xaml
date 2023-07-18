@@ -15,8 +15,7 @@
             <Entry Grid.Column="1" Text="{Binding Path=Model.Name}"/>
         </Grid>
         <Grid Grid.Row="0">
-            <Button Text="Ok" Clicked="OkClicked"></Button>
-            <Button Text="Go Back" Clicked="CancelClicked"></Button>
+            <Button Text="Ok" Clicked="CancelClicked"></Button>
         </Grid>
         <!--<Grid Grid.Row="0"> 
             <Grid.ColumnDefinitions>
@@ -55,7 +54,7 @@
             </Grid.ColumnDefinitions>
             <Button Grid.Column="0" Text="Close Project" Clicked="DeleteProjectClicked"></Button>
             <Button Grid.Column="1" Text="Add Project" Clicked="AddProjectClicked"></Button>
-            <Button Grid.Column="2" Text="Edit" Clicked="EditProjectClicked"></Button>
+            <Button Grid.Column="2" Text="Edit Project" Clicked="EditProjectClicked"></Button>
         </Grid>
     </VerticalStackLayout>
 </ContentPage>

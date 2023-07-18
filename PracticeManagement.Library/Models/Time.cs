@@ -10,9 +10,14 @@ namespace PracticeManagement.Library.Models
     {
         public DateTime Date { get; set; }
         public string? Narrative { get; set; }
-        public int Hours { get; set; }  
+        public decimal Hours { get; set; }  
         public int ProjectId { get; set; }
-        public string? EmployeeId { get; set; }
+        public int EmployeeId { get; set; }
+        public int Id { get; set; }
 
+        public override string ToString()
+        {
+            return $"Employee: {EmployeeId}, Hours: {Hours}";
+        }
     }
 }

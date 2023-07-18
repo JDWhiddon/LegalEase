@@ -62,6 +62,17 @@ namespace PracticeManagement.MAUI.ViewModels
             StopCommand = new Command(ExecuteStop);
         }
 
+        public decimal CalculateTime()
+        {
+            TimeSpan elapsed = stopwatch.Elapsed;
+            decimal hours = (decimal)elapsed.TotalHours;
+            decimal minutes = (decimal)elapsed.Minutes / 60;
+            decimal seconds = (decimal)elapsed.Seconds;
+            decimal total = seconds;
+            //decimal total = hours + minutes;
+            return Math.Round(total, 2);
+        }
+
         public TimerViewModel(int projectId)
         {
             Project = ProjectService.Current.Get(projectId) ?? new Project();
@@ -82,10 +93,14 @@ namespace PracticeManagement.MAUI.ViewModels
             }
 
         }
+
+        private void AddEntry(int employeeId)
+        {
+           
+        }
         private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-
     }
 }
