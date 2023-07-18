@@ -21,7 +21,7 @@ namespace PracticeManagement.CLI.Models
 
         public override string ToString()
         {
-            return $"Id: {Id}\n Name: {Name}\n Open Date: {OpenDate}\n Notes: {Notes}";
+            return $"Id: {Id} Name: {Name}";
         }
 
     }

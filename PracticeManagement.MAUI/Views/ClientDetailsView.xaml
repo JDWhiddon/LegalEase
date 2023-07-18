@@ -15,7 +15,7 @@
             <Entry Grid.Column="1" Text="{Binding Path=Model.Name}"/>
         </Grid>
         <Grid Grid.Row="0">
-            <Button Text="Ok" Clicked="CancelClicked"></Button>
+            <Button Text="Ok" Clicked="OkClicked"></Button>
         </Grid>
         <!--<Grid Grid.Row="0"> 
             <Grid.ColumnDefinitions>
