@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.SignalR;
-using PracticeManagement.CLI.Models;
+﻿using PracticeManagement.CLI.Models;
 
 namespace PracticeManagement.API.Database
 {
@@ -10,6 +9,6 @@ namespace PracticeManagement.API.Database
              new Client {Id = 1, Name = "John"},
              new Client {Id = 2, Name = "Doe"},
              new Client {Id = 3, Name = "Ron"}
-        }
+        };
     }
 }

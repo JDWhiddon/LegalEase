@@ -17,16 +17,6 @@
         <Grid Grid.Row="0">
             <Button Text="Ok" Clicked="OkClicked"></Button>
         </Grid>
-        <!--<Grid Grid.Row="0"> 
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="8*"/>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-            </Grid.ColumnDefinitions>
-            <Entry Grid.Column="0" Text="{Binding Path=Query}"></Entry>
-            <Button Grid.Column="1" Text="Search" Clicked="SearchClicked"></Button>
-            <Button Grid.Column="2" Text="Add" Clicked="CancelClicked"></Button>
-        </Grid>--> 
         <ListView
             ItemsSource="{Binding Projects, Mode=TwoWay}"
             SelectedItem="{Binding Path=SelectedProject, Mode=TwoWay}"

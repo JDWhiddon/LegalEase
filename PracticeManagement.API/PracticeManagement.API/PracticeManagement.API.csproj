@@ -13,9 +13,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<Reference Include="PP.Library">
-			<HintPath>..\..\PP.Library\bin\Debug\net7.0\PP.Library.dll</HintPath>
-		</Reference>
+	  <Reference Include="PracticeManagement.Library">
+	    <HintPath>..\..\PracticeManagement.Library\bin\Debug\net7.0\PracticeManagement.Library.dll</HintPath>
+	  </Reference>
 	</ItemGroup>
 
 </Project>
