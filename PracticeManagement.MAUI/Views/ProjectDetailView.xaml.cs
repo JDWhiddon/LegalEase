@@ -1,4 +1,5 @@
 using PracticeManagement.CLI.Models;
+using PracticeManagement.Library.Services;
 using PracticeManagement.MAUI.ViewModels;
 
 namespace PracticeManagement.MAUI.Views;
@@ -34,4 +35,10 @@ public partial class ProjectDetailView : ContentPage
         Shell.Current.GoToAsync("//Clients");
     }
 
+    private void GenerateBill(object sender, EventArgs e)
+    {
+        (BindingContext as ProjectViewModel).GenerateBill();
+        var clientId = ClientService.Current.Get(ProjectId);
+        Shell.Current.GoToAsync($"//ClientDetails?clientId={clientId}");
+    }
 }

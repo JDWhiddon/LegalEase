@@ -9,6 +9,8 @@ using System.Threading.Tasks;
 using PracticeManagement.Library.Services;
 using PracticeManagement.CLI.Models;
 using System.Windows.Input;
+using PracticeManagement.Library.DTO;
+using PracticeManagement.Library.Models;
 
 namespace PracticeManagement.MAUI.ViewModels
 {
@@ -17,16 +19,18 @@ namespace PracticeManagement.MAUI.ViewModels
         public event PropertyChangedEventHandler PropertyChanged;
 
         public ProjectViewModel SelectedProject { get; set; }
+        public BillViewModel SelectedBill { get; set; }
 
-        public ObservableCollection<Client> Clients
+
+        public ObservableCollection<ClientDTO> Clients
         {
             get
             {
                 if (string.IsNullOrEmpty(Query))
                 {
-                    return new ObservableCollection<Client>(ClientService.Current.ListOfClients);
+                    return new ObservableCollection<ClientDTO>(ClientService.Current.ListOfClients);
                 }
-                return new ObservableCollection<Client>(ClientService.Current.Search(Query));
+                return new ObservableCollection<ClientDTO>(ClientService.Current.Search(Query));
             }
         }
 
@@ -44,7 +48,22 @@ namespace PracticeManagement.MAUI.ViewModels
             }
         }
 
-        public Client SelectedClient { get; set; }
+        public ObservableCollection<BillViewModel> Bills
+        {
+            get
+            {
+                if (Model == null || Model.Id == 0)
+                {
+                    return new ObservableCollection<BillViewModel>();
+                }
+                return new ObservableCollection<BillViewModel>(BillService
+                    .Current.ListOfBills.Where(p => p.ClientId == Model.Id)
+                    .Select(r => new BillViewModel(r)));
+            }
+        }
+
+
+        public ClientDTO SelectedClient { get; set; }
         private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
@@ -69,6 +88,16 @@ namespace PracticeManagement.MAUI.ViewModels
             }
             ProjectService.Current.Delete(SelectedProject.Model.Id);
             NotifyPropertyChanged("Projects");
+        }
+
+        public void DeleteBill()
+        { 
+            if (SelectedBill == null)
+            {
+                return;
+            }
+            BillService.Current.Delete(SelectedBill.Model.Id);
+            NotifyPropertyChanged("Bills");
         }
         public void Edit()
         {
@@ -122,7 +151,7 @@ namespace PracticeManagement.MAUI.ViewModels
         {
             NotifyPropertyChanged("Clients");
         }
-        public Client Model { get; set; }
+        public ClientDTO Model { get; set; }
         public string Display
         {
             get
@@ -180,7 +209,7 @@ namespace PracticeManagement.MAUI.ViewModels
 
         }
 
-        public ClientViewModel(Client client)
+        public ClientViewModel(ClientDTO client)
         {
             Model = client;
             SetupCommands();
@@ -194,15 +223,17 @@ namespace PracticeManagement.MAUI.ViewModels
             }
             else
             {
-                Model = new Client();
+                Model = new ClientDTO();
             }
 
             SetupCommands();
         }
 
+
+
         public ClientViewModel()
         {
-            Model = new Client();
+            Model = new ClientDTO();
             SetupCommands();
         }
 

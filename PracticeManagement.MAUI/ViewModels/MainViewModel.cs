@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using PracticeManagement.Library.Services;
 using PracticeManagement.CLI.Models;
+using PracticeManagement.Library.DTO;
 
 namespace PracticeManagement.MAUI.ViewModels
 {
@@ -16,14 +17,14 @@ namespace PracticeManagement.MAUI.ViewModels
         public event PropertyChangedEventHandler PropertyChanged;
 
 
-        public ObservableCollection<Client> Clients
+        public ObservableCollection<ClientDTO> Clients
         {
             get {
                 if (string.IsNullOrEmpty(Query))
                 {
-                    return new ObservableCollection<Client>(ClientService.Current.ListOfClients);   
+                    return new ObservableCollection<ClientDTO>(ClientService.Current.ListOfClients);   
                 }
-                return new ObservableCollection<Client>(ClientService.Current.Search(Query));
+                return new ObservableCollection<ClientDTO>(ClientService.Current.Search(Query));
             }
         }
 

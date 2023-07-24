@@ -33,7 +33,8 @@ namespace PracticeManagement.Library.Services
         private TimeService()
         {
             listOfTimes = new List<Time> {
-                new Time {Id = 1, Hours = 1, EmployeeId = 1, ProjectId = 1 }
+                new Time {Id = 1, Hours = 1.0M, EmployeeId = 1, ProjectId = 1 },
+                new Time {Id = 2, Hours = 1.25M, EmployeeId = 1, ProjectId = 1 }
             };
         }
 

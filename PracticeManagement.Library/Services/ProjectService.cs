@@ -34,6 +34,7 @@ namespace PracticeManagement.Library.Services
                 new Project {Id = 1, LongName = "PWD", ClientId = 1, IsActive = true }                
             };
         }
+
         List<Project> listOfProjects;
         public void AddOrUpdate(Project project)
         {

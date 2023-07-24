@@ -67,9 +67,7 @@ namespace PracticeManagement.MAUI.ViewModels
             TimeSpan elapsed = stopwatch.Elapsed;
             decimal hours = (decimal)elapsed.TotalHours;
             decimal minutes = (decimal)elapsed.Minutes / 60;
-            decimal seconds = (decimal)elapsed.Seconds;
-            decimal total = seconds;
-            //decimal total = hours + minutes;
+            decimal total = hours + minutes;
             return Math.Round(total, 2);
         }
 

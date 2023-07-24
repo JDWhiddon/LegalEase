@@ -14,6 +14,7 @@ namespace PracticeManagement.Library.Models
         public int ProjectId { get; set; }
         public int EmployeeId { get; set; }
         public int Id { get; set; }
+        public bool Billed { get; set; }
 
         public override string ToString()
         {

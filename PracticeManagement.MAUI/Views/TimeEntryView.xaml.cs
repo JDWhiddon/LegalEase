@@ -16,20 +16,7 @@ public partial class TimeEntryView : ContentPage
 	{
 		InitializeComponent();
 
-	}
-    private void AddProjectClicked(object sender, EventArgs e)
-    {
-    }
-
-    private void DeleteProjectClicked(object sender, EventArgs e)
-    {
-       // (BindingContext as ProjectViewModel).DeleteEntry();
-    }
-
-    private void EditProjectClicked(object sender, EventArgs e)
-    {
-       // (BindingContext as ProjectViewModel).EditEntry();
-    }
+	}    
     private void OnArrived(object sender, NavigatedToEventArgs e)
     {
         if(TimeId != 0)

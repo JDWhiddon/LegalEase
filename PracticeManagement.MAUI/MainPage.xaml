@@ -20,6 +20,7 @@
 
                 <Button Grid.Column="0" Text="Client View" Clicked="ClientsClicked" HorizontalOptions="CenterAndExpand"></Button>
                 <Button Grid.Column="0" Grid.Row="2" Text="Employee View" Clicked="EmployeesClicked" HorizontalOptions="CenterAndExpand"></Button>
+                <Button Grid.Column="0" Grid.Row="3" Text="Enter Time" Clicked="TimeClicked" HorizontalOptions="CenterAndExpand"></Button>
             </Grid>
         </Grid>
     </ScrollView>

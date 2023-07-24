@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
+﻿using System.ComponentModel;
 using System.Collections.ObjectModel;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using PracticeManagement.Library.Services;
 using PracticeManagement.CLI.Models;
 using PracticeManagement.MAUI.Views;
@@ -33,6 +28,19 @@ namespace PracticeManagement.MAUI.ViewModels
                     .Select(r => new TimeEntryViewModel(r)));
             }
         }
+        public ObservableCollection<BillViewModel> Bills
+        {
+            get
+            {
+                if (Model == null || Model.Id == 0)
+                {
+                    return new ObservableCollection<BillViewModel>();
+                }
+                return new ObservableCollection<BillViewModel>(BillService
+                    .Current.ListOfBills.Where(p => p.ProjectId == Model.Id)
+                    .Select(r => new BillViewModel(r)));
+            }
+        }
 
         public ICommand AddOrUpdateCommand { get; private set; }
         public ICommand TimerCommand { get; private set; }
@@ -40,6 +48,7 @@ namespace PracticeManagement.MAUI.ViewModels
         public ICommand DeleteEntryCommand { get; private set; }
         public ICommand EditCommand { get; private set; }
         public ICommand ToggleProjectStatusCommand { get; private set; }
+        public ICommand GenerateBillCommand { get; private set; }
 
         public string Display
         {
@@ -91,12 +100,31 @@ namespace PracticeManagement.MAUI.ViewModels
         }
 
 
-
         private void ExecuteToggleProjectStatus()
         {
             ProjectService.Current.ExecuteToggleProjectStatus(Model);
             Shell.Current.GoToAsync($"//ClientDetails?clientId={Model.ClientId}");
         }
+
+        public void GenerateBill()
+        {
+            Bill bill = new Bill();
+            bill.ProjectId = Model.Id;
+            bill.ClientId = Model.ClientId;
+            bill.DueDate = DateTime.Today.AddDays(14);
+            foreach (var timeEntryViewModel in Times)
+            {
+                var employee = EmployeeService.Current.Get(timeEntryViewModel.Model.EmployeeId);
+                if (!timeEntryViewModel.Model.Billed)
+                {
+                    bill.TotalAmount += employee.Rate * timeEntryViewModel.Model.Hours;
+                    timeEntryViewModel.Model.Billed = true;
+                }
+            }
+            if (bill.TotalAmount == 0) return;
+            BillService.Current.AddOrUpdate(bill);
+        }
+
 
         public void SetUpCommands()
         {

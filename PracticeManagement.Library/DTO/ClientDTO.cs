@@ -1,26 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO.Pipes;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using PracticeManagement.CLI.Models;
-using PracticeManagement.Library.DTO;
 
-namespace PracticeManagement.CLI.Models
+namespace PracticeManagement.Library.DTO
 {
-    public class Client
+    public class ClientDTO
     {
-        public Client()
-        {
+        public ClientDTO()
+        { 
             Name = string.Empty;
         }
-        public Client(ClientDTO dto)
+        public ClientDTO(Client c)
         {
-            this.Id = dto.Id;
-            this.Name = dto.Name;
+            this.Id = c.Id;
+            this.Name = c.Name;
         }
-
         public int Id { get; set; }
         public DateTime OpenDate { get; set; }
         public DateTime ClosedDate { get; set; }
@@ -34,6 +31,5 @@ namespace PracticeManagement.CLI.Models
         {
             return $"Id: {Id} Name: {Name}";
         }
-
     }
 }

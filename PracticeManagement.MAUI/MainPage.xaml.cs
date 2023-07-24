@@ -35,7 +35,10 @@ namespace PracticeManagement.MAUI
         private void EmployeesClicked(object sender, EventArgs e)
         {
             Shell.Current.GoToAsync("//Employees");
-
+        }
+        private void TimeClicked(object sender, EventArgs e)
+        {
+            Shell.Current.GoToAsync("//Times");
         }
     }
 }

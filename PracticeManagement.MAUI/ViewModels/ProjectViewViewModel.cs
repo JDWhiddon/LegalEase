@@ -9,13 +9,14 @@ using System.Threading.Tasks;
 using PracticeManagement.Library.Services;
 using PracticeManagement.CLI.Models;
 using System.Windows.Input;
+using PracticeManagement.Library.DTO;
 
 namespace PracticeManagement.MAUI.ViewModels
 {
     public class ProjectViewViewModel : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
-        public Client Client { get; set; }
+        public ClientDTO Client { get; set; }
 
         public Project SelectedProject { get; set; }
         public ObservableCollection<Project> ListOfProjects
@@ -57,7 +58,7 @@ namespace PracticeManagement.MAUI.ViewModels
             else
             {
 
-                Client = new Client();
+                Client = new ClientDTO();
             }
         }
 

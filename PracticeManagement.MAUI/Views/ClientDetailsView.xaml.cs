@@ -42,6 +42,10 @@ public partial class ClientDetailsView : ContentPage
     {
         (BindingContext as ClientViewModel).DeleteProject();
     }
+    private void DeleteBillClicked(object sender, EventArgs e)
+    {
+        (BindingContext as ClientViewModel).DeleteBill();
+    }
 
     private void EditProjectClicked(object sender, EventArgs e)
     {
