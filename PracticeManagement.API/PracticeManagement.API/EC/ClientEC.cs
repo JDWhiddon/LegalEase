@@ -15,9 +15,9 @@ namespace PracticeManagement.API.EC
                     .FirstOrDefault(c => c.Id == dto.Id);
                 if (clientToUpdate != null)
                 {
-                    Filebase.Current.Clients.Remove(clientToUpdate);
+                    Filebase.Current.Delete(clientToUpdate);
                 }
-                Filebase.Current.Clients.Add(new Client(dto));
+                Filebase.Current.Clients.AddOrUpdate(new Client(dto));
             }
             else
             {
@@ -50,7 +50,7 @@ namespace PracticeManagement.API.EC
             var clientToDelete = Filebase.Current.Clients.FirstOrDefault(c => c.Id == id);
             if (clientToDelete != null)
             {
-                Filebase.Current.Clients.Remove(clientToDelete);
+                Filebase.Current.Delete(clientToDelete);
 
             }
             return clientToDelete != null ?

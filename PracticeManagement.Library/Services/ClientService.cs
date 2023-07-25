@@ -71,6 +71,7 @@ namespace PracticeManagement.Library.Services
 
         public void Delete(int id)
         {
+            var response = new WebRequestHandler().Delete($"/Client/Delete/{id}").Result;
             var clientToRemove = Get(id);
             if (clientToRemove != null)
             {

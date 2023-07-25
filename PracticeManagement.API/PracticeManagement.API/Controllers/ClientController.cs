@@ -41,10 +41,10 @@ namespace PracticeManagement.API.Controllers
             return new ClientEC().AddOrUpdate(dto);
         }
 
-        //[HttpPost]
-        //public IEnumerable<ClientDTO> Search([FromBody]QueryMessage query)
-        //{
-        //    return new ClientEC().Search(query.Query);
-        //}
+        [HttpPost("Search")]
+        public IEnumerable<ClientDTO> Search([FromBody]QueryMessage query)
+        {
+            return new ClientEC().Search(query.Query);
+        }
     }
 }

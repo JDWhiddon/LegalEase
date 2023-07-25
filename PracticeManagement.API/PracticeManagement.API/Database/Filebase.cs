@@ -101,7 +101,12 @@ namespace PracticeManagement.API.Database
 
             return true;
         }
+        public void Delete(Client client)
+        {
+            Delete(client.Id.ToString());
+        }
     }
+
 
 
     // ------------------- FAKE MODEL FILES, REPLACE THESE WITH A REFERENCE TO YOUR MODELS -------- //

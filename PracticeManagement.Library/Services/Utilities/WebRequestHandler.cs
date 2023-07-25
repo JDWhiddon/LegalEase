@@ -38,9 +38,10 @@ namespace PracticeManagement.Library.Utilities
         }
         public async Task<string> Delete(string url)
         {
+            var fullUrl = $"https://{host}:{port}{url}";
             using (var client = new HttpClient())
             {
-                using (var request = new HttpRequestMessage(HttpMethod.Delete, url))
+                using (var request = new HttpRequestMessage(HttpMethod.Delete, fullUrl))
                 {
                     using (var response = await client
                                 .SendAsync(request, HttpCompletionOption.ResponseHeadersRead)
