@@ -23,7 +23,7 @@ public partial class ProjectDetailView : ContentPage
         {
             BindingContext = new ProjectViewModel(ClientId);
         }
-        if (ProjectId != 0)  
+        if (ProjectId != 0)
         {
             BindingContext = new ProjectViewModel(ProjectId, true);
         }
@@ -41,4 +41,15 @@ public partial class ProjectDetailView : ContentPage
         var clientId = ClientService.Current.Get(ProjectId);
         Shell.Current.GoToAsync($"//ClientDetails?clientId={clientId}");
     }
+    private void DeleteProjectClicked(object sender, EventArgs e)
+    {
+        (BindingContext as ProjectViewModel).RefreshTimes();
+    }
+
+    private void ToggleActivityStatus(object sender, ToggledEventArgs e)
+    {
+        (BindingContext as ProjectViewModel).ExecuteToggleProjectStatus();
+    }
+
+
 }

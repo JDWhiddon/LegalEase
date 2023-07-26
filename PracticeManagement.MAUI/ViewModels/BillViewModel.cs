@@ -18,10 +18,13 @@ namespace PracticeManagement.MAUI.ViewModels
         public BillViewModel()
         {
             Model = new Bill();
+            SetUpCommands();
+
         }
         public BillViewModel(Bill bill)
         {
             Model = bill;
+            SetUpCommands();
         }
         public string Display
         {
@@ -48,19 +51,17 @@ namespace PracticeManagement.MAUI.ViewModels
 
         public Bill SelectedBill { get; set; }
 
-        public void Delete()
-        {
-            if (SelectedBill == null)
-            {
-                return;
-            }
-            BillService.Current.Delete(SelectedBill.Id);
-            NotifyPropertyChanged("Bills");
-        }
 
-        public void ExecuteDelete(int id)
+        public ICommand DeleteCommand { get; private set; }
+
+        public void SetUpCommands()
         {
-            BillService.Current.Delete(id);
+            DeleteCommand = new Command(ExecuteDelete);
+        }
+        public void ExecuteDelete()
+        {
+            BillService.Current.Delete(Model.Id);
+            NotifyPropertyChanged("Bills");
         }
     }
 }

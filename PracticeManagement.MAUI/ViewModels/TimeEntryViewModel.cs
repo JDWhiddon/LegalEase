@@ -19,6 +19,9 @@ namespace PracticeManagement.MAUI.ViewModels
         public Time Model { get; set; }
 
         public ICommand AddOrUpdateCommand { get; private set; }
+        public ICommand DeleteEntryCommand { get; private set; }
+        public ICommand EditEntryCommand { get; private set; }
+
 
 
         public string Display
@@ -29,16 +32,30 @@ namespace PracticeManagement.MAUI.ViewModels
             }
         }
 
-        
+        private void ExecuteEditEntry()
+        {
+            Shell.Current.GoToAsync($"//TimeEntry?timeId={Model.Id}");
+        }
+
+
         private void ExecuteAdd()
         {
             TimeService.Current.AddOrUpdate(Model);
             Shell.Current.GoToAsync($"//ProjectDetails?projectId={Model.ProjectId}");
         }
 
+        private void ExecuteDelete()
+        {
+            TimeService.Current.Delete(Model.Id);
+            //NotifyPropertyChanged("Times");
+            Shell.Current.GoToAsync($"//ProjectDetails?projectId={Model.Id}");
+        }
+
         public void SetUpCommands()
         {
             AddOrUpdateCommand = new Command(ExecuteAdd);
+            DeleteEntryCommand = new Command(ExecuteDelete);
+            EditEntryCommand = new Command(ExecuteEditEntry);
         }
 
         public TimeEntryViewModel(int projectid, decimal hours)

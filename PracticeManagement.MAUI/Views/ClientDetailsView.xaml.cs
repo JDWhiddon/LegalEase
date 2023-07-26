@@ -6,15 +6,20 @@ namespace PracticeManagement.MAUI.Views;
 
 [QueryProperty(nameof(ClientId), "clientId")]
 
+
+
 public partial class ClientDetailsView : ContentPage
 {
     public int ClientId { get; set; }
 
+    public bool IsAddingProject { get; set; }
+
     public ClientDetailsView()
-	{
-		InitializeComponent();
-		BindingContext = new ClientViewModel();
-	}
+    {
+        InitializeComponent();
+        BindingContext = new ClientViewModel();
+        IsAddingProject = false;
+    }
 
     private void OkClicked(object sender, EventArgs e)
     {
@@ -35,20 +40,23 @@ public partial class ClientDetailsView : ContentPage
 
     private void AddProjectClicked(object sender, EventArgs e)
     {
-        Shell.Current.GoToAsync($"//ProjectDetails?clientId={ClientId}");
+        (BindingContext as ClientViewModel).ToggleAddingProject();
+        //   Shell.Current.GoToAsync($"//ProjectDetails?clientId={ClientId}");
     }
-     
+
     private void DeleteProjectClicked(object sender, EventArgs e)
     {
-        (BindingContext as ClientViewModel).DeleteProject();
+        (BindingContext as ClientViewModel).RefreshProjects();
+    }
+
+    private void SaveClicked(object sender, EventArgs e)
+    {
+        (BindingContext as ClientViewModel).ExecuteAddProject();
+        (BindingContext as ClientViewModel).ToggleAddingProject();
     }
     private void DeleteBillClicked(object sender, EventArgs e)
     {
-        (BindingContext as ClientViewModel).DeleteBill();
+        (BindingContext as ClientViewModel).RefreshBills();
     }
 
-    private void EditProjectClicked(object sender, EventArgs e)
-    {
-        (BindingContext as ClientViewModel).EditProject();
-    }
 }

@@ -2,73 +2,139 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="PracticeManagement.MAUI.Views.ClientDetailsView"
-             Title="ClientDetailsView"
+             Title="Client Details"
              NavigatedTo="OnArrived">
-    <VerticalStackLayout>
-        <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition Width="11*"/>
-            </Grid.ColumnDefinitions>
-            <Label Grid.Column="0"
-            Text="Name"/>
-            <Entry Grid.Column="1" Text="{Binding Path=Model.Name}"/>
-        </Grid>
-        <Grid Grid.Row="0">
-            <Button Text="Ok" Clicked="OkClicked"></Button>
-        </Grid>
-        <Label Grid.Column="0"
-            Text="Projects"/>
-        <ListView
-            ItemsSource="{Binding Projects, Mode=TwoWay}"
-            SelectedItem="{Binding Path=SelectedProject, Mode=TwoWay}"
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style TargetType="ListView" x:Key="listviewStyle">
+            </Style>
+            <Style TargetType="Label" x:Key="headingLabelStyle">
+                <Setter Property="FontSize" Value="20"></Setter>
+                <Setter Property="HorizontalOptions" Value="Center"></Setter>
+                <Setter Property="Padding" Value="0,15,0,0"></Setter>
+                <Setter Property="TextColor" Value="White"></Setter>
+                <Setter Property="FontFamily" Value="RemRegular"></Setter>
+            </Style>
+            <Style TargetType="Label" x:Key="contentLabelStyle">
+                <Setter Property="TextColor" Value="Black"></Setter>
+                <Setter Property="FontFamily" Value="RemRegular"></Setter>
+            </Style>
+            <Style TargetType="Frame" x:Key="frameStyle">
+                <Setter Property="BackgroundColor" Value="#E7E7E7"></Setter>
+                <Setter Property="BorderColor" Value="Black"></Setter>
+                <Setter Property="CornerRadius" Value="10"></Setter>
+                <Setter Property="Margin" Value="100,10,100,10"></Setter>
+                <Setter Property="HeightRequest" Value="250"></Setter>
+            </Style>
+            <Style TargetType="ImageButton" x:Key="imageButtonStyle">
+                <Setter Property="Scale" Value=".5"></Setter>
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ScrollView>
+        <VerticalStackLayout
+            BackgroundColor="#1B2F3D">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="11*"/>
+                </Grid.ColumnDefinitions>
+                <Entry Grid.Column="1" Text="{Binding Path=Model.Name}"
+                   FontSize="20"
+                   Placeholder="Enter client name"
+                   TextColor="White"
+                   FontFamily="RemRegular"/>
+            </Grid>
+            <Grid Grid.Row="0">
+                <Button Text="Ok" Clicked="OkClicked"></Button>
+            </Grid>
+            <!-- Center and make the "Projects" label bigger -->
+            <Label Grid.Column="0" Text="Projects" Style="{StaticResource headingLabelStyle}"/>
+            <!-- Add a frame around the ListView -->
+            <Frame Style="{StaticResource frameStyle}">
+                <ListView
+                ItemsSource="{Binding Projects, Mode=TwoWay}"
+                Style="{StaticResource listviewStyle}"
             >
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <ViewCell>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="12*"/>
-                                <ColumnDefinition/>
-                            </Grid.ColumnDefinitions>
-                            <Label Grid.Column="0" VerticalTextAlignment="Center" Text="{Binding Display}"></Label>
-                            <Button Grid.Column="1" Text="Timer" Command="{Binding TimerCommand}"/>
-                        </Grid>
-                    </ViewCell>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
-        <Grid Grid.Row="2">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-            </Grid.ColumnDefinitions>
-            <Button Grid.Column="0" Text="Close Project" Clicked="DeleteProjectClicked"></Button>
-            <Button Grid.Column="1" Text="Add Project" Clicked="AddProjectClicked"></Button>
-            <Button Grid.Column="2" Text="Edit Project" Clicked="EditProjectClicked"></Button>
-        </Grid>
-        <Label Grid.Column="0"
-            Text="Bills"/>
-            <ListView
-            ItemsSource="{Binding Bills, Mode=TwoWay}"
-            SelectedItem="{Binding Path=SelectedBill, Mode=TwoWay}"
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="12*"/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <Label Grid.Column="0" Style="{StaticResource contentLabelStyle}" VerticalTextAlignment="Center" Text="{Binding Display}"></Label>
+                                    <ImageButton Source="timer.png"
+                                    Style="{StaticResource imageButtonStyle}"
+                                    Grid.Column="1"
+                                    Command="{Binding TimerCommand}"/>
+                                    <ImageButton Source="editicon.png"
+                                    Style="{StaticResource imageButtonStyle}"
+                                    Grid.Column="2"
+                                    Command="{Binding EditCommand}"/>
+                                    <ImageButton Source="delete.png"
+                                    Style="{StaticResource imageButtonStyle}"
+                                    Grid.Column="3"
+                                    Clicked="DeleteProjectClicked"
+                                    Command="{Binding DeleteCommand}"/>
+                                </Grid>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </Frame>
+            <Button Grid.Column="1"
+                    Text="Add Project"
+                    Clicked="AddProjectClicked"
+                    IsVisible="{Binding AddIsVisible}"
+                    Margin="100,0,100,0"
+                    ></Button>
+            <StackLayout Grid.Row="3" Grid.Column="1" IsVisible="{Binding IsVisible}">
+                <Entry 
+                FontSize="20"
+                Placeholder="Enter project name"
+                TextColor="White"
+                FontFamily="RemRegular"
+                Text="{Binding NewProjectName}"
+                Margin="100,0,100,0"
+                />
+                <Button Text="Save"
+                    Clicked="SaveClicked"
+                    Margin="100,0,100,0"/>
+            </StackLayout>
+            <!-- Center and make the "Bills" label bigger -->
+            <Label Grid.Column="0" Text="Bills" Style="{StaticResource headingLabelStyle}"/>
+            <!-- Add a frame around the ListView -->
+            <Frame Style="{StaticResource frameStyle}">
+                <ListView
+                ItemsSource="{Binding Bills, Mode=TwoWay}"
+                SelectedItem="{Binding Path=SelectedBill, Mode=TwoWay}"
             >
-            
-            <ListView.ItemTemplate>
-            <DataTemplate>
-                <ViewCell>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="12*"/>
-                            <ColumnDefinition/>
-                        </Grid.ColumnDefinitions>
-                        <Label Grid.Column="0" VerticalTextAlignment="Center" Text="{Binding Display}"></Label>
-                    </Grid>
-                </ViewCell>
-            </DataTemplate>
-        </ListView.ItemTemplate>
-        </ListView>
-        <Button Text="Mark Bill as Paid" Clicked="DeleteBillClicked"></Button>
-    </VerticalStackLayout>
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="12*"/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <Label 
+                                    Style="{StaticResource contentLabelStyle}"
+                                    Grid.Column="0" VerticalTextAlignment="Center" Text="{Binding Display}"></Label>
+                                    <ImageButton Source="delete.png"
+                                    Style="{StaticResource imageButtonStyle}"
+                                    Grid.Column="1"
+                                    Clicked="DeleteBillClicked"
+                                    Command="{Binding DeleteCommand}"/>
+                                </Grid>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </Frame>
+            <Button Text="Mark Bill as Paid" Clicked="DeleteBillClicked"></Button>
+        </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>

@@ -47,6 +47,7 @@ namespace PracticeManagement.MAUI.ViewModels
         public ICommand EditEntryCommand { get; private set; }
         public ICommand DeleteEntryCommand { get; private set; }
         public ICommand EditCommand { get; private set; }
+        public ICommand DeleteCommand { get; private set; }
         public ICommand ToggleProjectStatusCommand { get; private set; }
         public ICommand GenerateBillCommand { get; private set; }
 
@@ -59,8 +60,7 @@ namespace PracticeManagement.MAUI.ViewModels
         }
         private void ExecuteEdit() 
         {
-            ProjectService.Current.AddOrUpdate(Model);
-            Shell.Current.GoToAsync($"//ClientDetails?clientId={Model.ClientId}");
+            Shell.Current.GoToAsync($"//ProjectDetails?projectId={Model.Id}");
         }
         private void ExecuteAdd()
         {
@@ -81,11 +81,11 @@ namespace PracticeManagement.MAUI.ViewModels
 
         private void ExecuteEditEntry()
         {
-            if (SelectedTime == null)
-            {
-                return;
-            }
             Shell.Current.GoToAsync($"//TimeEntry?timeId={SelectedTime.Model.Id}");
+        }
+        private void ExecuteDelete()
+        {
+            ProjectService.Current.Delete(Model.Id);
         }
 
         private void ExecuteDeleteEntry()
@@ -100,10 +100,9 @@ namespace PracticeManagement.MAUI.ViewModels
         }
 
 
-        private void ExecuteToggleProjectStatus()
+        public void ExecuteToggleProjectStatus()
         {
             ProjectService.Current.ExecuteToggleProjectStatus(Model);
-            Shell.Current.GoToAsync($"//ClientDetails?clientId={Model.ClientId}");
         }
 
         public void GenerateBill()
@@ -133,7 +132,11 @@ namespace PracticeManagement.MAUI.ViewModels
             ToggleProjectStatusCommand = new Command(ExecuteToggleProjectStatus);
             EditEntryCommand = new Command(ExecuteEditEntry);
             DeleteEntryCommand = new Command(ExecuteDeleteEntry);
+            DeleteCommand = new Command(ExecuteDelete);
+            EditCommand = new Command(ExecuteEdit);
         }
+        
+
         
         public ProjectViewModel(int clientId)
         { 

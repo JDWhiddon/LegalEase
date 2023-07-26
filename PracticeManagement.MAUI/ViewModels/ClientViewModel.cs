@@ -164,7 +164,61 @@ namespace PracticeManagement.MAUI.ViewModels
             NotifyPropertyChanged(nameof(Projects));
         }
 
+        public void ToggleAddingProject()
+        {
+            if (IsVisible == true)
+            {
+                IsVisible = false;
+                AddIsVisible = true;
+            }
+            else if (IsVisible == false)
+            {
+                IsVisible = true;
+                AddIsVisible = false;
+            }
 
+        }
+
+        private bool isVisible = false;
+        private bool addIsVisible = true;
+        private string newProjectName = string.Empty;
+
+        public string NewProjectName
+        {
+            get => newProjectName;
+            set
+            {
+                if (newProjectName == value) return;
+                newProjectName = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(NewProjectName)));
+            }
+        }
+        public bool IsVisible
+        {
+            get => isVisible;
+            set
+            {
+                if (isVisible == value) return;
+                isVisible = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsVisible)));
+            }
+        }
+
+        public bool AddIsVisible
+        {
+            get => addIsVisible;
+            set
+            {
+                if (addIsVisible == value) return;
+                addIsVisible = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(AddIsVisible)));
+            }
+        }
+
+        public void RefreshBills()
+        {
+            NotifyPropertyChanged(nameof(Bills));
+        }
 
         public ICommand DeleteCommand { get; private set; }
         public ICommand EditCommand { get; private set; }
@@ -177,8 +231,15 @@ namespace PracticeManagement.MAUI.ViewModels
         }
         public void ExecuteAddProject()
         {
-            AddOrUpdate();
-            Shell.Current.GoToAsync($"//ProjectDetails?clientId={Model.Id}");
+            if (NewProjectName == string.Empty) { return; }
+            Project _project = new Project
+            {
+                ClientId = Model.Id,
+                LongName = NewProjectName
+            };
+            ProjectService.Current.AddOrUpdate(_project);
+            NewProjectName = string.Empty;
+            RefreshProjects();
         }
 
         public void ExecuteEdit(int id)
