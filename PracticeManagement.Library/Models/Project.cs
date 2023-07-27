@@ -19,7 +19,7 @@ namespace PracticeManagement.CLI.Models
 
         public override string ToString()
         {
-            return $"Id: {Id} - {LongName}\n Open: {IsActive}";
+            return $"Id: {Id} - {LongName} Active: {IsActive}";
         }
     }
 }

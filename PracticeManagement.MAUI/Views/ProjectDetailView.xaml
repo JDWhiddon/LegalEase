@@ -49,11 +49,12 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
                     <ColumnDefinition/>
+                    <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
-                <Button Grid.Column ="0" Text="Toggle Active Status" Command="{Binding ToggleProjectStatusCommand}"/>
-                <Button Grid.Column ="1" Text="OK" Command="{Binding AddOrUpdateCommand}"/>
+                <Label Text="Active Status" Margin="0,50,0,0" FontFamily="RemRegular"/>
+                <Switch IsToggled="{Binding Path = Model.IsActive, Mode=TwoWay}"/>
+                <Button Grid.Column ="1" Text="OK" Margin="10,30,10,0" Command="{Binding AddOrUpdateCommand}"/>
             </Grid>
-            <Switch IsToggled="true" Toggled="ToggleActivityStatus"/>
             <Label Grid.Column="0" Text="Time Entries" Style="{StaticResource headingLabelStyle}"/>
             <Frame Style="{StaticResource frameStyle}">
                 <ListView
@@ -92,7 +93,6 @@
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
                 <Button Grid.Column="1" Text="Add Entry" Command="{Binding TimerCommand}"></Button>
-                <Button Grid.Column="2" Text="Generate Bill" Clicked="GenerateBill"></Button>
             </Grid>
             <Label Text="Bills" Style="{StaticResource headingLabelStyle}"/>
             <Frame Style="{StaticResource frameStyle}">
@@ -115,6 +115,7 @@
                     </ListView.ItemTemplate>
                 </ListView>
             </Frame>
+            <Button Text="Generate Bill" Clicked="GenerateBill"></Button>
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

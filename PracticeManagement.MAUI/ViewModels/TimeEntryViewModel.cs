@@ -47,7 +47,6 @@ namespace PracticeManagement.MAUI.ViewModels
         private void ExecuteDelete()
         {
             TimeService.Current.Delete(Model.Id);
-            //NotifyPropertyChanged("Times");
             Shell.Current.GoToAsync($"//ProjectDetails?projectId={Model.Id}");
         }
 

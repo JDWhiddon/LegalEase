@@ -48,6 +48,7 @@ public partial class ProjectDetailView : ContentPage
 
     private void ToggleActivityStatus(object sender, ToggledEventArgs e)
     {
+
         (BindingContext as ProjectViewModel).ExecuteToggleProjectStatus();
     }
 

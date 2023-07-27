@@ -105,6 +105,19 @@ namespace PracticeManagement.MAUI.ViewModels
             ProjectService.Current.ExecuteToggleProjectStatus(Model);
         }
 
+        //For the toggle switch in ProjectDetailView
+        private bool projectActiveStatus;
+
+        public bool ProjectActiveStatus
+        {
+            get => projectActiveStatus;
+            set
+            {
+                if (projectActiveStatus == value) return;
+                projectActiveStatus = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ProjectActiveStatus)));
+            }
+        }
         public void GenerateBill()
         {
             Bill bill = new Bill();
@@ -139,7 +152,7 @@ namespace PracticeManagement.MAUI.ViewModels
 
         
         public ProjectViewModel(int clientId)
-        { 
+        {
             Model = new Project { ClientId = clientId };
             SetUpCommands();
         }
