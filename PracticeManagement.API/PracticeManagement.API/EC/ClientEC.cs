@@ -17,7 +17,7 @@ namespace PracticeManagement.API.EC
                 {
                     Filebase.Current.Delete(clientToUpdate);
                 }
-                Filebase.Current.Clients.AddOrUpdate(new Client(dto));
+                Filebase.Current.AddOrUpdate(new Client(dto));
             }
             else
             {
