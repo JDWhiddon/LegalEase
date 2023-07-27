@@ -52,9 +52,8 @@
             <!-- Add a frame around the ListView -->
             <Frame Style="{StaticResource frameStyle}">
                 <ListView
-                ItemsSource="{Binding Projects, Mode=TwoWay}"
-                Style="{StaticResource listviewStyle}"
-            >
+                    ItemsSource="{Binding Projects, Mode=TwoWay}"
+                    Style="{StaticResource listviewStyle}">
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell>

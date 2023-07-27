@@ -10,17 +10,12 @@ public partial class ClientView : ContentPage
     public ClientView()
 	{
 		InitializeComponent();
-        BindingContext = new ClientViewModel();
+        BindingContext = new MainViewModel();
     }
 
     private void DeleteClicked(object sender, EventArgs e)
     {
-        (BindingContext as ClientViewModel).Delete();
-    }
-
-    private void SearchClicked(object sender, EventArgs e)
-    {
-        (BindingContext as ClientViewModel).Search();
+       (BindingContext as MainViewModel).RefreshClients();
     }
 
     private void GoBackClicked(object sender, EventArgs e)
@@ -28,17 +23,22 @@ public partial class ClientView : ContentPage
         Shell.Current.GoToAsync("//MainPage");
     }
 
-    private void AddClicked(object sender, EventArgs e)
+    private void AddClientClicked(object sender, EventArgs e)
     {
-        Shell.Current.GoToAsync("//ClientDetails");
+        (BindingContext as MainViewModel).ToggleAddingClient();
     }
-    private void EditClicked(object sender, EventArgs e)
+
+    private void SaveClicked(object sender, EventArgs e)
     {
-        (BindingContext as ClientViewModel).Edit();
+        (BindingContext as MainViewModel).ExecuteAddClient();
+        (BindingContext as MainViewModel).ToggleAddingClient();
     }
+
+
+
 
     private void OnArrived(object sender, NavigatedToEventArgs e)
     {
-        (BindingContext as ClientViewModel).RefreshClientList();
+        (BindingContext as MainViewModel).RefreshClients();
     }
 }

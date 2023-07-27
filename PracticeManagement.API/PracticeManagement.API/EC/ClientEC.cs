@@ -29,6 +29,7 @@ namespace PracticeManagement.API.EC
 
         public ClientDTO? Get(int id)
         {
+
             var returnVal = Filebase.Current.Clients
                 .FirstOrDefault(c => c.Id == id)
                 ?? new Client();

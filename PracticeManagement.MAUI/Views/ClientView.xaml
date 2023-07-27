@@ -3,44 +3,111 @@
              x:Class="PracticeManagement.MAUI.Views.ClientView"
              Title="ClientView"
              NavigatedTo="OnArrived">
-    <ScrollView>
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style TargetType="ListView" x:Key="listviewStyle">
+            </Style>
+            <Style TargetType="Label" x:Key="headingLabelStyle">
+                <Setter Property="FontSize" Value="20"></Setter>
+                <Setter Property="HorizontalOptions" Value="Center"></Setter>
+                <Setter Property="Padding" Value="0,15,0,0"></Setter>
+                <Setter Property="TextColor" Value="White"></Setter>
+                <Setter Property="FontFamily" Value="RemRegular"></Setter>
+            </Style>
+            <Style TargetType="Label" x:Key="contentLabelStyle">
+                <Setter Property="TextColor" Value="Black"></Setter>
+                <Setter Property="FontFamily" Value="RemRegular"></Setter>
+            </Style>
+            <Style TargetType="Frame" x:Key="frameStyle">
+                <Setter Property="BackgroundColor" Value="#E7E7E7"></Setter>
+                <Setter Property="BorderColor" Value="Black"></Setter>
+                <Setter Property="CornerRadius" Value="10"></Setter>
+                <Setter Property="Margin" Value="100,25,100,25"></Setter>
+            </Style>
+            <Style TargetType="ImageButton" x:Key="imageButtonStyle">
+                <Setter Property="Scale" Value=".5"></Setter>
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ScrollView BackgroundColor="#1B2F3D">
         <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
 
-        <Grid Grid.Row="0">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="8*"/>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-            </Grid.ColumnDefinitions>
-            <Entry Grid.Column="0" Text="{Binding Path=Query}"></Entry>
-            <Button Grid.Column="1" Text="Search" Clicked="SearchClicked"></Button>
-            <Button Grid.Column="2" Text="Add" Clicked="AddClicked"></Button>
-        </Grid>
-
-        <Grid Grid.Row="1">
-            <ListView ItemsSource="{Binding Path=Clients, Mode=TwoWay}"
-                      SelectedItem="{Binding Path=SelectedClient, Mode=TwoWay}">
-            </ListView>
-        </Grid>
-
-        <Grid Grid.Row="2">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
+            <!-- Search bar and Add button -->
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="8*"/>
+                    <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
-            <Button Text="Edit Client" Grid.Column="0" Clicked="EditClicked"></Button>
-            <Button Text="Close Client" Grid.Column="1" Clicked="DeleteClicked"></Button>
+                <Entry Grid.Column="0" 
+                       Text="{Binding Path=Query}"
+                       FontSize="20"
+                       Placeholder="Search"
+                       TextColor="White"
+                       FontFamily="RemRegular"
+                       ReturnCommand="{Binding SearchCommand}"></Entry>
+                <Button Grid.Column="1" Text="Add"></Button>
             </Grid>
 
-        <Grid Grid.Row="3">
-            <Button Text="Go Back" Clicked="GoBackClicked"></Button>
+            <!-- Frame containing the ListView -->
+            <Frame Grid.Row="1" Style="{StaticResource frameStyle}">
+                <ListView ItemsSource="{Binding Clients, Mode=TwoWay}"
+                          Style="{StaticResource listviewStyle}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="12*"/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <Label Grid.Column="0" Style="{StaticResource contentLabelStyle}" VerticalTextAlignment="Center" Text="{Binding Display}"></Label>
+                                    <ImageButton Source="editicon.png"
+                                                 Style="{StaticResource imageButtonStyle}"
+                                                 Grid.Column="1"
+                                                 Command="{Binding EditCommand}"/>
+                                    <ImageButton Source="delete.png"
+                                                 Style="{StaticResource imageButtonStyle}"
+                                                 Grid.Column="2"
+                                                 Clicked="DeleteClicked"
+                                                 Command="{Binding DeleteCommand}"/>
+                                </Grid>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </Frame>
+            <Grid Grid.Row="2">
+                <Button Grid.Column="1"
+                    Text="Add Client"
+                    Clicked="AddClientClicked"
+                    IsVisible="{Binding AddIsVisible}"
+                    Margin="100,0,100,0"
+                    ></Button>
+            <StackLayout Grid.Row="3" Grid.Column="1" IsVisible="{Binding EntryIsVisible}">
+                <Entry 
+                FontSize="20"
+                Placeholder="Enter client name"
+                TextColor="White"
+                FontFamily="RemRegular"
+                Text="{Binding NewClientName}"
+                Margin="100,0,100,0"
+                />
+                <Button Text="Save"
+                    Clicked="SaveClicked"
+                    Margin="100,0,100,0"/>
+            </StackLayout>
+            </Grid>
+            <!-- Go Back button in the fourth row -->
+            <Grid Grid.Row="3">
+                <Button Text="Go Back" Clicked="GoBackClicked" Margin="100,0,100,0"></Button>
+            </Grid>
         </Grid>
-    </Grid>
     </ScrollView>
 </ContentPage>

@@ -21,18 +21,8 @@ namespace PracticeManagement.MAUI.ViewModels
         public ProjectViewModel SelectedProject { get; set; }
         public BillViewModel SelectedBill { get; set; }
 
+        public ClientDTO Model { get; set; }
 
-        public ObservableCollection<ClientDTO> Clients
-        {
-            get
-            {
-                if (string.IsNullOrEmpty(Query))
-                {
-                    return new ObservableCollection<ClientDTO>(ClientService.Current.ListOfClients);
-                }
-                return new ObservableCollection<ClientDTO>(ClientService.Current.Search(Query));
-            }
-        }
 
         public ObservableCollection<ProjectViewModel> Projects
         {
@@ -99,15 +89,6 @@ namespace PracticeManagement.MAUI.ViewModels
             BillService.Current.Delete(SelectedBill.Model.Id);
             NotifyPropertyChanged("Bills");
         }
-        public void Edit()
-        {
-            if (SelectedClient == null)
-            {
-                return;
-            }
-            ExecuteEdit(SelectedClient.Id);
-            NotifyPropertyChanged("Clients");
-        }
 
         public void EditProject()
         {
@@ -151,7 +132,6 @@ namespace PracticeManagement.MAUI.ViewModels
         {
             NotifyPropertyChanged("Clients");
         }
-        public ClientDTO Model { get; set; }
         public string Display
         {
             get
@@ -225,6 +205,7 @@ namespace PracticeManagement.MAUI.ViewModels
         public ICommand ShowProjectsCommand { get; private set; }
         public ICommand AddProjectCommand { get; private set; }
 
+        public ICommand SearchCommand { get; private set; }
         public void ExecuteDelete(int id)
         {
             ClientService.Current.Delete(id);
@@ -256,17 +237,17 @@ namespace PracticeManagement.MAUI.ViewModels
 
         private void SetupCommands()
         {
-            DeleteCommand = new Command(
-                (c) => ExecuteDelete((c as ClientViewModel).Model.Id));
+            DeleteCommand = new Command(() => ExecuteDelete(Model.Id));
 
-            EditCommand = new Command(
-                (c) => ExecuteEdit((c as ClientViewModel).Model.Id));
+            EditCommand = new Command(() => ExecuteEdit(Model.Id));
 
             ShowProjectsCommand = new Command(
                 (c) => ExecuteShowProjects((c as ClientViewModel).Model.Id));
 
             AddProjectCommand = new Command(
                 (c) => ExecuteAddProject());
+
+            SearchCommand = new Command(Search);
 
         }
 
