@@ -1,4 +1,5 @@
-﻿using PracticeManagement.API.Database;
+﻿using System.Xml;
+using PracticeManagement.API.Database;
 using PracticeManagement.CLI.Models;
 using PracticeManagement.Library.DTO;
 
@@ -8,38 +9,33 @@ namespace PracticeManagement.API.EC
     {
         public ClientDTO AddOrUpdate(ClientDTO dto)
         {
-            if (dto.Id > 0)
+            if (dto.Id <= 0)
             {
-                var clientToUpdate 
-                    = Filebase.Current.Clients
-                    .FirstOrDefault(c => c.Id == dto.Id);
-                if (clientToUpdate != null)
-                {
-                    Filebase.Current.Delete(clientToUpdate);
-                }
-                Filebase.Current.AddOrUpdate(new Client(dto));
+                var result = MsSqlContext.Current.Insert(new Client(dto));
+                return new ClientDTO(result);
             }
             else
             {
-                Filebase.Current.AddOrUpdate(new Client(dto));
+                MsSqlContext.Current.Update(new Client(dto));
+                return dto;
             }
-            return dto;
         }
 
 
         public ClientDTO? Get(int id)
         {
 
-            var returnVal = Filebase.Current.Clients
-                .FirstOrDefault(c => c.Id == id)
+            var result = MsSqlContext.Current.GetClient()
+                .FirstOrDefault(x => x.Id == id)
                 ?? new Client();
 
-            return new ClientDTO(returnVal);
+            return new ClientDTO(result);
         }
 
         public IEnumerable<ClientDTO> Search(string query = "")
         {
-            return Filebase.Current.Clients
+            List<Client> result = MsSqlContext.Current.GetClient();
+            return result
                 .Where(c => c.Name.ToUpper()
                 .Contains(query.ToUpper()))
                 .Take(1000)
@@ -48,15 +44,8 @@ namespace PracticeManagement.API.EC
 
         public ClientDTO? Delete(int id)
         {
-            var clientToDelete = Filebase.Current.Clients.FirstOrDefault(c => c.Id == id);
-            if (clientToDelete != null)
-            {
-                Filebase.Current.Delete(clientToDelete);
-
-            }
-            return clientToDelete != null ?
-                new ClientDTO(clientToDelete)
-                : null;
+            MsSqlContext.Current.Delete(id);
+            return new ClientDTO();
         }
     }
 }

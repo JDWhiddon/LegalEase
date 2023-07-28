@@ -11,7 +11,79 @@ namespace PracticeManagement.API.Database
         }
         private string connectionString;
 
-        public List<Client> Get()
+        public Client Insert(Client c)
+        {
+            try
+            {
+                using (var conn = new SqlConnection(connectionString))
+                {
+                    var sql = $"InsertClient";
+                    using (var cmd = new SqlCommand(sql, conn))
+                    {
+                        cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                        cmd.Parameters.Add(new SqlParameter("name", c.Name));
+                        conn.Open();
+                        var Id = (int)cmd.ExecuteScalar();
+                        c.Id = Id;
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                return c;
+            }
+            return c;
+        }
+
+        public void Delete(int c)
+        {
+            try
+            {
+                using (var conn = new SqlConnection(connectionString))
+                {
+                    var sql = "DeleteClient";
+                    using (var cmd = new SqlCommand(sql, conn))
+                    {
+                        cmd.CommandType = System.Data.CommandType.StoredProcedure;
+
+                        cmd.Parameters.Add(new SqlParameter("@id", c));
+                        conn.Open();
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+            }
+            catch (Exception)
+            {
+
+            }
+        }
+
+        public Client Update(Client c)
+        {
+            try
+            {
+                using (var conn = new SqlConnection(connectionString))
+                {
+                    var sql = $"UpdateClient";
+                    using (var cmd = new SqlCommand(sql, conn))
+                    {
+                        cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                        cmd.Parameters.Add(new SqlParameter("name", c.Name));
+                        cmd.Parameters.Add(new SqlParameter("id", c.Id));
+                        conn.Open();
+                        cmd.ExecuteReader();
+                    }
+
+                }
+            }
+            catch (Exception)
+            {
+                return c;
+            }
+            return c;
+        }
+
+        public List<Client> GetClient()
         {
             var results = new List<Client>();
             using (var conn = new SqlConnection(connectionString))

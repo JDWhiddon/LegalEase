@@ -107,8 +107,7 @@
             <Frame Style="{StaticResource frameStyle}">
                 <ListView
                 ItemsSource="{Binding Bills, Mode=TwoWay}"
-                SelectedItem="{Binding Path=SelectedBill, Mode=TwoWay}"
-            >
+                SelectedItem="{Binding Path=SelectedBill, Mode=TwoWay}">
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell>
