@@ -1,5 +1,4 @@
-﻿using System.Xml;
-using PracticeManagement.API.Database;
+﻿using PracticeManagement.API.Database;
 using PracticeManagement.CLI.Models;
 using PracticeManagement.Library.DTO;
 
@@ -11,14 +10,20 @@ namespace PracticeManagement.API.EC
         {
             if (dto.Id <= 0)
             {
-                var result = MsSqlContext.Current.Insert(new Client(dto));
-                return new ClientDTO(result);
+                //var result = MsSqlContext.Current.Insert(new Client(dto));
+                //return new ClientDTO(result);
+                using (var context = new EfContextFactory().CreateDbContext(new string[0]))
+                {
+                    context.Clients.Add(new Client(dto));
+                    context.SaveChanges();
+                }
             }
             else
             {
                 MsSqlContext.Current.Update(new Client(dto));
                 return dto;
             }
+            return dto;
         }
 
 

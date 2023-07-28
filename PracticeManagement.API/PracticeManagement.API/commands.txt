@@ -1,0 +1,3 @@
+﻿--create
+dotnet ef migrations add Initial -o Migrations -c PracticeManagement.API.Database.EfContext
+dotnet ef database update -c PracticeManagement.API.Database.EfContext

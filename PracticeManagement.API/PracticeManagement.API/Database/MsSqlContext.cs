@@ -183,7 +183,7 @@ namespace PracticeManagement.API.Database
         }
         public Project UpdateProject(Project p)
         {
-            int active = p.IsActive ? 1 : 0;
+            int active = p.IsActive ? 0 : 1;
             try
             {
                 using (var conn = new SqlConnection(connectionString))
