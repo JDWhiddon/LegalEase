@@ -9,43 +9,42 @@ namespace PracticeManagement.API.EC
     {
         public ProjectDTO AddOrUpdate(ProjectDTO dto)
         {
-            if (dto.Id <= 0)
-            {
-                var result = MsSqlContext.Current.InsertProject(new Project(dto));
-                return new ProjectDTO(result);
-            }
-            else
-            {
-                MsSqlContext.Current.Update(new Client(dto));
-                return dto;
-            }
+            //if (dto.Id <= 0)
+            //{
+            //    var result = MsSqlContext.Current.Insert(new Project(dto));
+            //    return new ProjectDTO(result);
+            //}
+            //else
+            //{
+            //    MsSqlContext.Current.Update(new Project(dto));
+            //    return dto;
+            //}
+            var result = MsSqlContext.Current.Insert(new Project(dto));
+            return new ProjectDTO(result);
         }
 
 
-        public ClientDTO? Get(int id)
+        //    public ProjectDTO? Get(int id)
+        //    {
+
+        //        var result = MsSqlContext.Current.GetClient()
+        //            .FirstOrDefault(x => x.Id == id)
+        //            ?? new Client();
+
+        //        return new ClientDTO(result);
+        //    }
+
+        public IEnumerable<ProjectDTO> Search()
         {
-
-            var result = MsSqlContext.Current.GetClient()
-                .FirstOrDefault(x => x.Id == id)
-                ?? new Client();
-
-            return new ClientDTO(result);
-        }
-
-        public IEnumerable<ClientDTO> Search(string query = "")
-        {
-            List<Client> result = MsSqlContext.Current.GetClient();
+            List<Project> result = MsSqlContext.Current.GetProject();
             return result
-                .Where(c => c.Name.ToUpper()
-                .Contains(query.ToUpper()))
                 .Take(1000)
-                .Select(c => new ClientDTO(c));
+                .Select(c => new ProjectDTO(c));
         }
-
-        public ClientDTO? Delete(int id)
-        {
-            MsSqlContext.Current.Delete(id);
-            return new ClientDTO();
-        }
+        //    public ProjectDTO? Delete(int id)
+        //    {
+        //        MsSqlContext.Current.Delete(id);
+        //        return new ProjectDTO();
+        //    }
     }
 }

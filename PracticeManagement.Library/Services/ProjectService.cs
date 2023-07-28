@@ -1,5 +1,7 @@
-﻿using PracticeManagement.CLI.Models;
+﻿using Newtonsoft.Json;
+using PracticeManagement.CLI.Models;
 using PracticeManagement.Library.DTO;
+using PracticeManagement.Library.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,18 +33,41 @@ namespace PracticeManagement.Library.Services
 
         private ProjectService()
         {
-            listOfProjects = new List<ProjectDTO> { };
+            var response = new WebRequestHandler()
+                        .Get($"/Project/GetProjects")
+                        .Result;
+            listOfProjects = JsonConvert
+                .DeserializeObject<List<ProjectDTO>>(response)
+                ?? new List<ProjectDTO>();
+            //listOfProjects = new List<ProjectDTO> { };
         }
 
         List<ProjectDTO> listOfProjects;
-        public void AddOrUpdate(ProjectDTO project)
+        public void AddOrUpdate(ProjectDTO dto)
         {
-            if(project.Id == 0)
+            //if(project.Id == 0)
+            //{
+            //    project.Id = LastId + 1;
+            //    project.IsActive = true;
+            //    listOfProjects.Add(project);
+            //}
+            var response = new WebRequestHandler().Post("/Project", dto).Result;
+            var myUpdatedProject = JsonConvert.DeserializeObject<ProjectDTO>(response);
+            if (myUpdatedProject != null)
             {
-                project.Id = LastId + 1;
-                project.IsActive = true;
-                listOfProjects.Add(project);
+                var existingProject = listOfProjects.FirstOrDefault(c => c.Id == myUpdatedProject.Id);
+                if (existingProject == null)
+                {
+                    listOfProjects.Add(myUpdatedProject);
+                }
+                else
+                {
+                    var index = listOfProjects.IndexOf(existingProject);
+                    listOfProjects.RemoveAt(index);
+                    listOfProjects.Insert(index, myUpdatedProject);
+                }
             }
+            //RefreshProjectList();
         }
 
         public void ExecuteToggleProjectStatus(ProjectDTO project)

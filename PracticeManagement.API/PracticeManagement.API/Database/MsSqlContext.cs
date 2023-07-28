@@ -11,6 +11,7 @@ namespace PracticeManagement.API.Database
         }
         private string connectionString;
 
+        //Clients
         public Client Insert(Client c)
         {
             try
@@ -99,6 +100,57 @@ namespace PracticeManagement.API.Database
                         {
                             Id = (int)reader[0],
                             Name = reader[1].ToString() ?? string.Empty
+                        });
+
+                    }
+                }
+            }
+            return results;
+        }
+
+        //Projects
+        public Project Insert(Project p)
+        {
+            try
+            {
+                using (var conn = new SqlConnection(connectionString))
+                {
+                    var sql = $"InsertProject";
+                    using (var cmd = new SqlCommand(sql, conn))
+                    {
+                        cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                        cmd.Parameters.Add(new SqlParameter("longname", p.LongName));
+                        cmd.Parameters.Add(new SqlParameter("clientid", p.ClientId));
+                        conn.Open();
+                        var Id = (int)cmd.ExecuteScalar();
+                        p.Id = Id;
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                return p;
+            }
+            return p;
+        }
+
+        public List<Project> GetProject()
+        {
+            var results = new List<Project>();
+            using (var conn = new SqlConnection(connectionString))
+            {
+                var sql = "select id, longname, clientid from Projects";
+                using (var cmd = new SqlCommand(sql, conn))
+                {
+                    conn.Open();
+                    var reader = cmd.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        results.Add(new Project
+                        {
+                            Id = (int)reader[0],
+                            LongName = reader[1].ToString() ?? string.Empty,
+                            ClientId = (int)reader[2]
                         });
 
                     }

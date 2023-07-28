@@ -14,6 +14,12 @@ namespace PracticeManagement.CLI.Models
         {
             this.Id = dto.Id;
             this.LongName = dto.LongName;
+            this.ClientId = dto.ClientId;
+        }
+
+        public Project()
+        {
+            LongName = string.Empty;
         }
         public int Id { get; set; }
         public DateTime OpenDate { get; set; }

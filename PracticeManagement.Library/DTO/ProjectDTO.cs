@@ -17,6 +17,7 @@ namespace PracticeManagement.Library.DTO
         {
             this.Id = p.Id;
             this.LongName = p.LongName;
+            this.ClientId = p.ClientId;
         }
         public int Id { get; set; }
         public DateTime OpenDate { get; set; }

@@ -19,6 +19,7 @@ namespace PracticeManagement.CLI.Models
         {
             this.Id = dto.Id;
             this.Name = dto.Name;
+            
         }
 
         public int Id { get; set; }
