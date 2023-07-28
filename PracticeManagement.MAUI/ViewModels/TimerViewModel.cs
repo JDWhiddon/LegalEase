@@ -10,13 +10,14 @@ using PracticeManagement.Library.Services;
 using PracticeManagement.CLI.Models;
 using System.Diagnostics;
 using System.Windows.Input;
+using PracticeManagement.Library.DTO;
 
 namespace PracticeManagement.MAUI.ViewModels
 {
     public class TimerViewModel : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
-        public Project Project { get; set; }
+        public ProjectDTO Project { get; set; }
 
         public string TimerDisplay
         {
@@ -73,7 +74,7 @@ namespace PracticeManagement.MAUI.ViewModels
 
         public TimerViewModel(int projectId)
         {
-            Project = ProjectService.Current.Get(projectId) ?? new Project();
+            Project = ProjectService.Current.Get(projectId) ?? new ProjectDTO();
             stopwatch = new Stopwatch();
             timer = Application.Current.Dispatcher.CreateTimer();
             timer.Interval = new TimeSpan(0, 0, 0, 1);

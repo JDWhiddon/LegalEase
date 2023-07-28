@@ -3,17 +3,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Xml.Linq;
-using PracticeManagement.Library.DTO;
+using PracticeManagement.CLI.Models;
 
-namespace PracticeManagement.CLI.Models
+namespace PracticeManagement.Library.DTO
 {
-    public class Project
+    public class ProjectDTO
     {
-        public Project(ProjectDTO dto)
+        public ProjectDTO()
         {
-            this.Id = dto.Id;
-            this.LongName = dto.LongName;
+            LongName = string.Empty;
+        }
+        public ProjectDTO(Project p)
+        {
+            this.Id = p.Id;
+            this.LongName = p.LongName;
         }
         public int Id { get; set; }
         public DateTime OpenDate { get; set; }

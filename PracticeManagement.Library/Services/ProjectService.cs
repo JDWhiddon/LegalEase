@@ -1,4 +1,5 @@
 ﻿using PracticeManagement.CLI.Models;
+using PracticeManagement.Library.DTO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,13 +31,11 @@ namespace PracticeManagement.Library.Services
 
         private ProjectService()
         {
-            listOfProjects = new List<Project> {
-                new Project {Id = 1, LongName = "PWD", ClientId = 1, IsActive = true }                
-            };
+            listOfProjects = new List<ProjectDTO> { };
         }
 
-        List<Project> listOfProjects;
-        public void AddOrUpdate(Project project)
+        List<ProjectDTO> listOfProjects;
+        public void AddOrUpdate(ProjectDTO project)
         {
             if(project.Id == 0)
             {
@@ -46,7 +45,7 @@ namespace PracticeManagement.Library.Services
             }
         }
 
-        public void ExecuteToggleProjectStatus(Project project)
+        public void ExecuteToggleProjectStatus(ProjectDTO project)
         {
             if (project.IsActive == true)
             {
@@ -59,10 +58,10 @@ namespace PracticeManagement.Library.Services
         }
 
 
-        public List<Project> Search(string query) => ListOfProjects.Where(s => s.LongName.ToUpper().Contains(query.ToUpper())).ToList();
-        public Project? Get(int id) => listOfProjects.FirstOrDefault(e => e.Id == id);
+        public List<ProjectDTO> Search(string query) => ListOfProjects.Where(s => s.LongName.ToUpper().Contains(query.ToUpper())).ToList();
+        public ProjectDTO? Get(int id) => listOfProjects.FirstOrDefault(e => e.Id == id);
 
-        public List<Project> ListOfProjects
+        public List<ProjectDTO> ListOfProjects
         {
             get
             {

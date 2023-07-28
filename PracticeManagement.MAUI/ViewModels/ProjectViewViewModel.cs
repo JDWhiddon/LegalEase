@@ -19,15 +19,15 @@ namespace PracticeManagement.MAUI.ViewModels
         public ClientDTO Client { get; set; }
 
         public Project SelectedProject { get; set; }
-        public ObservableCollection<Project> ListOfProjects
+        public ObservableCollection<ProjectDTO> ListOfProjects
         {
             get
             {
                 if (Client == null || Client.Id == 0)
                 {
-                    return new ObservableCollection<Project>();
+                    return new ObservableCollection<ProjectDTO>();
                 }
-                return new ObservableCollection<Project>(ProjectService.Current.Search(Query));
+                return new ObservableCollection<ProjectDTO>(ProjectService.Current.Search(Query));
             }
         }
 

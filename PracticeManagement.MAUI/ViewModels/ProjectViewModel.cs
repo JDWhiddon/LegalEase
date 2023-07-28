@@ -6,13 +6,14 @@ using PracticeManagement.CLI.Models;
 using PracticeManagement.MAUI.Views;
 using System.Windows.Input;
 using PracticeManagement.Library.Models;
+using PracticeManagement.Library.DTO;
 
 namespace PracticeManagement.MAUI.ViewModels
 {
     public class ProjectViewModel : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
-        public Project Model { get; set; }
+        public ProjectDTO Model { get; set; }
         public TimeEntryViewModel SelectedTime { get; set; }
 
         public ObservableCollection<TimeEntryViewModel> Times
@@ -153,19 +154,19 @@ namespace PracticeManagement.MAUI.ViewModels
         
         public ProjectViewModel(int clientId)
         {
-            Model = new Project { ClientId = clientId };
+            Model = new ProjectDTO { ClientId = clientId };
             SetUpCommands();
         }
 
         public ProjectViewModel(int projectId, bool isProjectId)
         {
-            Project project = ProjectService.Current.Get(projectId);
+            ProjectDTO project = ProjectService.Current.Get(projectId);
             Model = project;
             AddOrUpdateCommand = new Command(ExecuteEdit);
             SetUpCommands();
         }
 
-        public ProjectViewModel(Project model)
+        public ProjectViewModel(ProjectDTO model)
         {
             Model = model;
             AddOrUpdateCommand = new Command(ExecuteEdit);
@@ -174,7 +175,7 @@ namespace PracticeManagement.MAUI.ViewModels
 
         public ProjectViewModel()
         {
-            Model = new Project();
+            Model = new ProjectDTO();
             SetUpCommands();
         }
 

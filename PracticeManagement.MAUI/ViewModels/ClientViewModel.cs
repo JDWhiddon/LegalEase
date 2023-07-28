@@ -213,7 +213,7 @@ namespace PracticeManagement.MAUI.ViewModels
         public void ExecuteAddProject()
         {
             if (NewProjectName == string.Empty) { return; }
-            Project _project = new Project
+            ProjectDTO _project = new ProjectDTO
             {
                 ClientId = Model.Id,
                 LongName = NewProjectName
