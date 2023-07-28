@@ -39,18 +39,11 @@ namespace PracticeManagement.Library.Services
             listOfProjects = JsonConvert
                 .DeserializeObject<List<ProjectDTO>>(response)
                 ?? new List<ProjectDTO>();
-            //listOfProjects = new List<ProjectDTO> { };
         }
 
         List<ProjectDTO> listOfProjects;
         public void AddOrUpdate(ProjectDTO dto)
         {
-            //if(project.Id == 0)
-            //{
-            //    project.Id = LastId + 1;
-            //    project.IsActive = true;
-            //    listOfProjects.Add(project);
-            //}
             var response = new WebRequestHandler().Post("/Project", dto).Result;
             var myUpdatedProject = JsonConvert.DeserializeObject<ProjectDTO>(response);
             if (myUpdatedProject != null)
@@ -67,7 +60,6 @@ namespace PracticeManagement.Library.Services
                     listOfProjects.Insert(index, myUpdatedProject);
                 }
             }
-            //RefreshProjectList();
         }
 
         public void ExecuteToggleProjectStatus(ProjectDTO project)
@@ -103,10 +95,16 @@ namespace PracticeManagement.Library.Services
         }
         public void Delete(int id)
         {
+            //var projectToRemove = Get(id);
+            //if (projectToRemove != null)
+            //{
+            //    listOfProjects.Remove(projectToRemove);
+            //}
+            var response = new WebRequestHandler().Delete($"/Project/Delete/{id}").Result;
             var projectToRemove = Get(id);
             if (projectToRemove != null)
             {
-                listOfProjects.Remove(projectToRemove);
+                ListOfProjects.Remove(projectToRemove);
             }
         }
 

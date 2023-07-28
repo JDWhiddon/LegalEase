@@ -20,7 +20,7 @@ namespace PracticeManagement.API.Controllers
         [HttpGet("GetProjects")]
         public IEnumerable<ProjectDTO> Get()
         {
-            return new ProjectEc().Search();
+            return new ProjectEC().Search();
         }
 
         //[HttpGet("GetClients/{id}")]
@@ -29,16 +29,16 @@ namespace PracticeManagement.API.Controllers
         //    return new ClientEC().Get(id);
         //}
 
-        //[HttpDelete("Delete/{id}")]
-        //public ClientDTO? Delete(int id)
-        //{
-        //    return new ClientEC().Delete(id);
-        //}
+        [HttpDelete("Delete/{id}")]
+        public ProjectDTO? Delete(int id)
+        {
+            return new ProjectEC().Delete(id);
+        }
 
         [HttpPost]
         public ProjectDTO AddOrUpdate([FromBody] ProjectDTO dto)
         {
-            return new ProjectEc().AddOrUpdate(dto);
+            return new ProjectEC().AddOrUpdate(dto);
         }
     }
 }

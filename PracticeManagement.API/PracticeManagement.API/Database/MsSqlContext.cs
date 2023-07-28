@@ -159,6 +159,54 @@ namespace PracticeManagement.API.Database
             return results;
         }
 
+        public void DeleteProject(int c)
+        {
+            try
+            {
+                using (var conn = new SqlConnection(connectionString))
+                {
+                    var sql = "DeleteProject";
+                    using (var cmd = new SqlCommand(sql, conn))
+                    {
+                        cmd.CommandType = System.Data.CommandType.StoredProcedure;
+
+                        cmd.Parameters.Add(new SqlParameter("@id", c));
+                        conn.Open();
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+            }
+            catch (Exception)
+            {
+
+            }
+        }
+        public Project UpdateProject(Project p)
+        {
+            int active = p.IsActive ? 1 : 0;
+            try
+            {
+                using (var conn = new SqlConnection(connectionString))
+                {
+                    var sql = $"UpdateProject";
+                    using (var cmd = new SqlCommand(sql, conn))
+                    {
+                        cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                        cmd.Parameters.Add(new SqlParameter("longname", p.LongName));
+                        cmd.Parameters.Add(new SqlParameter("id", p.Id));
+                        cmd.Parameters.Add(new SqlParameter("isactive", active));
+                        conn.Open();
+                        cmd.ExecuteReader();
+                    }
+
+                }
+            }
+            catch (Exception)
+            {
+                return p;
+            }
+            return p;
+        }
 
         private static MsSqlContext? Instance;
         public static MsSqlContext Current

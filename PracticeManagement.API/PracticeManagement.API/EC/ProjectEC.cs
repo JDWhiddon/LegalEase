@@ -5,22 +5,21 @@ using PracticeManagement.Library.DTO;
 
 namespace PracticeManagement.API.EC
 {
-    public class ProjectEc
+    public class ProjectEC
     {
         public ProjectDTO AddOrUpdate(ProjectDTO dto)
         {
-            //if (dto.Id <= 0)
-            //{
-            //    var result = MsSqlContext.Current.Insert(new Project(dto));
-            //    return new ProjectDTO(result);
-            //}
-            //else
-            //{
-            //    MsSqlContext.Current.Update(new Project(dto));
-            //    return dto;
-            //}
-            var result = MsSqlContext.Current.Insert(new Project(dto));
-            return new ProjectDTO(result);
+            if (dto.Id <= 0)
+            {
+                var result = MsSqlContext.Current.Insert(new Project(dto));
+                return new ProjectDTO(result);
+            }
+            else
+            {
+                MsSqlContext.Current.UpdateProject(new Project(dto));
+                return dto;
+            }
+            
         }
 
 
@@ -41,10 +40,11 @@ namespace PracticeManagement.API.EC
                 .Take(1000)
                 .Select(c => new ProjectDTO(c));
         }
-        //    public ProjectDTO? Delete(int id)
-        //    {
-        //        MsSqlContext.Current.Delete(id);
-        //        return new ProjectDTO();
-        //    }
+
+       public ProjectDTO? Delete(int id)
+       {
+            MsSqlContext.Current.DeleteProject(id);
+            return new ProjectDTO();
+       }
     }
 }
