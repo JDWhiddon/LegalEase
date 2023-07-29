@@ -5,6 +5,7 @@ using PracticeManagement.Library.Services;
 using PracticeManagement.CLI.Models;
 using PracticeManagement.Library.Models;
 using System.Windows.Input;
+using PracticeManagement.Library.DTO;
 
 namespace PracticeManagement.MAUI.ViewModels
 {
@@ -17,21 +18,21 @@ namespace PracticeManagement.MAUI.ViewModels
         }
 
 
-        public ObservableCollection<Employee> Employees
+        public ObservableCollection<EmployeeDTO> Employees
         {
             get
             {
                 if (string.IsNullOrEmpty(Query))
                 {
-                    return new ObservableCollection<Employee>(EmployeeService.Current.ListOfEmployees);
+                    return new ObservableCollection<EmployeeDTO>(EmployeeService.Current.ListOfEmployees);
                 }
-                return new ObservableCollection<Employee>(EmployeeService.Current.Search(Query));
+                return new ObservableCollection<EmployeeDTO>(EmployeeService.Current.Search(Query));
             }
         }
 
-        public Employee SelectedEmployee { get; set; }
+        public EmployeeDTO SelectedEmployee { get; set; }
 
-        public Employee Model { get; set; }
+        public EmployeeDTO Model { get; set; }
         public void Delete()
         {
             if (SelectedEmployee == null)
@@ -72,7 +73,7 @@ namespace PracticeManagement.MAUI.ViewModels
         }
         public EmployeeViewModel()
         {
-            Model = new Employee();
+            Model = new EmployeeDTO();
             SetupCommands();
         }
 
@@ -84,7 +85,7 @@ namespace PracticeManagement.MAUI.ViewModels
             }
             else
             {
-                Model = new Employee();
+                Model = new EmployeeDTO();
             }
 
             SetupCommands();

@@ -40,7 +40,6 @@ namespace PracticeManagement.Library.Services
             listOfClients = JsonConvert
                 .DeserializeObject<List<ClientDTO>>(response)
                 ?? new List<ClientDTO>();
-
         }
 
         public List<ClientDTO> Search(string query) => ListOfClients.Where(s => s.Name.ToUpper().Contains(query.ToUpper())).ToList();
