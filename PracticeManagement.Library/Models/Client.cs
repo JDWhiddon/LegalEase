@@ -23,8 +23,8 @@ namespace PracticeManagement.CLI.Models
         }
 
         public int Id { get; set; }
-        public DateTime OpenDate { get; set; }
-        public DateTime ClosedDate { get; set; }
+        public DateTime? OpenDate { get; set; }
+        public DateTime? ClosedDate { get; set; }
         public string? IsActive { get; set; }
         public string? Name { get; set; }
         public string? Notes { get; set; }

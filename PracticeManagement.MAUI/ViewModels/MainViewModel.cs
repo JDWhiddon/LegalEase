@@ -29,8 +29,8 @@ namespace PracticeManagement.MAUI.ViewModels
                         .Current.ListOfClients
                         .Select(r => new ClientViewModel(r)) );
                 }
-                //return new ObservableCollection<ClientViewModel>(ClientService.Current.Search(Query));
-                return new ObservableCollection<ClientViewModel>();
+                List<ClientDTO> searchResults = ClientService.Current.Search(Query);
+                return new ObservableCollection<ClientViewModel>(searchResults.Select(r => new ClientViewModel(r)));
             }
         }
         public ObservableCollection<TimeEntryViewModel> Times
@@ -59,6 +59,7 @@ namespace PracticeManagement.MAUI.ViewModels
         public ICommand EditCommand { get; private set; }
         public ICommand AddProjectCommand { get; private set; }
         public ICommand ShowProjectsCommand { get; private set; }
+        public ICommand SearchCommand { get; private set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -104,6 +105,11 @@ namespace PracticeManagement.MAUI.ViewModels
             //TODO: if we cancel the creation of this client, we need to delete it on cancel.
             Shell.Current.GoToAsync($"//ProjectDetails?clientId={Model.Id}");
         }
+        public void Search()
+        {
+
+            NotifyPropertyChanged("Clients");
+        }
 
         private void SetupCommands()
         {
@@ -113,6 +119,7 @@ namespace PracticeManagement.MAUI.ViewModels
                 (c) => ExecuteEdit((c as ClientViewModel).Model.Id));
             ShowProjectsCommand = new Command(
                 (c) => ExecuteShowProjects((c as ClientViewModel).Model.Id));
+            SearchCommand = new Command(Search);
         }
 
         public void ToggleAddingClient()

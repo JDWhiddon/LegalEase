@@ -7,7 +7,6 @@ namespace PracticeManagement.API.Database
     public class EfContextFactory : IDesignTimeDbContextFactory<EfContext>
     {
         static string? connectionString = null;
-
         static EfContextFactory()
         {
             IConfiguration config = new ConfigurationBuilder()
@@ -15,7 +14,7 @@ namespace PracticeManagement.API.Database
                 .AddJsonFile("appsettings.json", true, true)
                 .Build();
 
-            connectionString = config["ConectionStrings:LegalEase_DB2"];
+            connectionString = config.GetConnectionString("LegalEase_DB2");
         }
         public EfContext CreateDbContext(string[] args)
         {
@@ -24,7 +23,6 @@ namespace PracticeManagement.API.Database
 
             return new EfContext(optionsBuilder.Options);
         }
-
 
     }
 }

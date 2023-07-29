@@ -1,4 +1,6 @@
-﻿using PracticeManagement.API.Database;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using PracticeManagement.API.Database;
 using PracticeManagement.CLI.Models;
 using PracticeManagement.Library.DTO;
 
@@ -10,8 +12,6 @@ namespace PracticeManagement.API.EC
         {
             if (dto.Id <= 0)
             {
-                //var result = MsSqlContext.Current.Insert(new Client(dto));
-                //return new ClientDTO(result);
                 using (var context = new EfContextFactory().CreateDbContext(new string[0]))
                 {
                     context.Clients.Add(new Client(dto));
@@ -20,8 +20,17 @@ namespace PracticeManagement.API.EC
             }
             else
             {
-                MsSqlContext.Current.Update(new Client(dto));
-                return dto;
+                using (var context = new EfContextFactory().CreateDbContext(new string[0]))
+                {
+                    var client = context.Clients.FirstOrDefault(c => c.Id == dto.Id);
+                    client.Name = dto.Name;
+                    client.Notes = dto.Notes;
+                    client.OpenDate = dto.OpenDate;
+                    client.ClosedDate = dto.ClosedDate;
+                    client.IsActive = dto.IsActive;
+                    context.SaveChanges();
+                }
+
             }
             return dto;
         }
@@ -39,17 +48,28 @@ namespace PracticeManagement.API.EC
 
         public IEnumerable<ClientDTO> Search(string query = "")
         {
-            List<Client> result = MsSqlContext.Current.GetClient();
-            return result
-                .Where(c => c.Name.ToUpper()
-                .Contains(query.ToUpper()))
-                .Take(1000)
-                .Select(c => new ClientDTO(c));
+            using (var context = new EfContextFactory().CreateDbContext(new string[0]))
+            {
+                List<Client> result = context.Clients.ToList();
+                return result
+                    .Where(c => c.Name.ToUpper()
+                    .Contains(query.ToUpper()))
+                    .Take(1000)
+                    .Select(c => new ClientDTO(c));
+            }
         }
 
         public ClientDTO? Delete(int id)
         {
-            MsSqlContext.Current.Delete(id);
+            using (var context = new EfContextFactory().CreateDbContext(new string[0]))
+            {
+                var clientToDelete = context.Clients.FirstOrDefault(c => c.Id == id);
+                if (clientToDelete != null)
+                {
+                    context.Clients.Remove(clientToDelete);
+                    context.SaveChanges();
+                }
+            }
             return new ClientDTO();
         }
     }
