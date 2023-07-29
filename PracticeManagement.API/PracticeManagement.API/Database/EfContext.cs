@@ -8,7 +8,8 @@ using PracticeManagement.CLI.Models;
             public EfContext(DbContextOptions<EfContext> options)
                    : base(options) { }
 
-         public DbSet<Client> Clients { get; set; }
+        public DbSet<Client> Clients { get; set; }
+        public DbSet<Project> Projects { get; set; }
 
     }
 }

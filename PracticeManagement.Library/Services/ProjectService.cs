@@ -4,6 +4,7 @@ using PracticeManagement.Library.DTO;
 using PracticeManagement.Library.Utilities;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -60,6 +61,16 @@ namespace PracticeManagement.Library.Services
                     listOfProjects.Insert(index, myUpdatedProject);
                 }
             }
+            RefreshProjectList();
+        }
+        public void RefreshProjectList()
+        {
+            var response = new WebRequestHandler()
+                        .Get($"/Project/GetProjects")
+                        .Result;
+            listOfProjects = JsonConvert
+                .DeserializeObject<List<ProjectDTO>>(response)
+                ?? new List<ProjectDTO>();
         }
 
         public void ExecuteToggleProjectStatus(ProjectDTO project)
@@ -75,7 +86,7 @@ namespace PracticeManagement.Library.Services
         }
 
 
-        public List<ProjectDTO> Search(string query) => ListOfProjects.Where(s => s.LongName.ToUpper().Contains(query.ToUpper())).ToList();
+        public List<ProjectDTO> Search(int clientId) => ListOfProjects.Where(s => s.ClientId == clientId).ToList();
         public ProjectDTO? Get(int id) => listOfProjects.FirstOrDefault(e => e.Id == id);
 
         public List<ProjectDTO> ListOfProjects
@@ -95,11 +106,6 @@ namespace PracticeManagement.Library.Services
         }
         public void Delete(int id)
         {
-            //var projectToRemove = Get(id);
-            //if (projectToRemove != null)
-            //{
-            //    listOfProjects.Remove(projectToRemove);
-            //}
             var response = new WebRequestHandler().Delete($"/Project/Delete/{id}").Result;
             var projectToRemove = Get(id);
             if (projectToRemove != null)

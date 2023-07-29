@@ -18,11 +18,14 @@ namespace PracticeManagement.Library.DTO
             this.Id = p.Id;
             this.LongName = p.LongName;
             this.ClientId = p.ClientId;
+            this.IsActive = p.IsActive;
+            this.OpenDate = p.OpenDate;
+            this.ClosedDate = p.ClosedDate;
         }
         public int Id { get; set; }
-        public DateTime OpenDate { get; set; }
-        public DateTime ClosedDate { get; set; }
-        public bool IsActive { get; set; }
+        public DateTime? OpenDate { get; set; }
+        public DateTime? ClosedDate { get; set; }
+        public bool? IsActive { get; set; }
         public string? ShortName { get; set; }
         public string? LongName { get; set; }
         public int ClientId { get; set; }

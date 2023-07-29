@@ -33,7 +33,7 @@ namespace PracticeManagement.MAUI.ViewModels
                     return new ObservableCollection<ProjectViewModel>();
                 }
                 return new ObservableCollection<ProjectViewModel>(ProjectService
-                    .Current.ListOfProjects.Where(p => p.ClientId == Model.Id)
+                    .Current.Search(Model.Id)
                     .Select(r => new ProjectViewModel(r)));
             }
         }
@@ -62,10 +62,6 @@ namespace PracticeManagement.MAUI.ViewModels
         public void Delete()
         {
 
-            if (SelectedClient == null || ProjectService.Current.ListOfProjects.Any(p => p.ClientId == SelectedClient.Id && p.IsActive)) 
-            {
-                return;
-            }
             ClientService.Current.Delete(SelectedClient.Id);
             NotifyPropertyChanged("Clients");
         }

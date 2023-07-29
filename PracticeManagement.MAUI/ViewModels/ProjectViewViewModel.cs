@@ -27,7 +27,7 @@ namespace PracticeManagement.MAUI.ViewModels
                 {
                     return new ObservableCollection<ProjectDTO>();
                 }
-                return new ObservableCollection<ProjectDTO>(ProjectService.Current.Search(Query));
+                return new ObservableCollection<ProjectDTO>(ProjectService.Current.Search(0));
             }
         }
 

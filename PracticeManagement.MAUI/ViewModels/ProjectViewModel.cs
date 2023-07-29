@@ -67,6 +67,7 @@ namespace PracticeManagement.MAUI.ViewModels
         {
             ProjectService.Current.AddOrUpdate(Model);
             Shell.Current.GoToAsync($"//ClientDetails?clientId={Model.ClientId}");
+            NotifyPropertyChanged("Projects");
         }
 
         private void ExecuteTimer()

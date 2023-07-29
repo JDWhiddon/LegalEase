@@ -183,7 +183,7 @@ namespace PracticeManagement.API.Database
         }
         public Project UpdateProject(Project p)
         {
-            int active = p.IsActive ? 0 : 1;
+            //int active = p.IsActive ? 0 : 1;
             try
             {
                 using (var conn = new SqlConnection(connectionString))
@@ -194,7 +194,7 @@ namespace PracticeManagement.API.Database
                         cmd.CommandType = System.Data.CommandType.StoredProcedure;
                         cmd.Parameters.Add(new SqlParameter("longname", p.LongName));
                         cmd.Parameters.Add(new SqlParameter("id", p.Id));
-                        cmd.Parameters.Add(new SqlParameter("isactive", active));
+              //          cmd.Parameters.Add(new SqlParameter("isactive", active));
                         conn.Open();
                         cmd.ExecuteReader();
                     }
