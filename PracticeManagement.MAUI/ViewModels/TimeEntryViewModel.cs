@@ -11,12 +11,13 @@ using PracticeManagement.CLI.Models;
 using System.Diagnostics;
 using System.Windows.Input;
 using PracticeManagement.Library.Models;
+using PracticeManagement.Library.DTO;
 
 namespace PracticeManagement.MAUI.ViewModels
 {
     public class TimeEntryViewModel
     {
-        public Time Model { get; set; }
+        public TimeDTO Model { get; set; }
 
         public ICommand AddOrUpdateCommand { get; private set; }
         public ICommand DeleteEntryCommand { get; private set; }
@@ -59,7 +60,7 @@ namespace PracticeManagement.MAUI.ViewModels
 
         public TimeEntryViewModel(int projectid, decimal hours)
         {
-            Model = new Time { ProjectId = projectid, Hours = hours };
+            Model = new TimeDTO { ProjectId = projectid, Hours = hours };
 
             SetUpCommands();
         }
@@ -70,7 +71,7 @@ namespace PracticeManagement.MAUI.ViewModels
             SetUpCommands();
         }
 
-        public TimeEntryViewModel(Time model)
+        public TimeEntryViewModel(TimeDTO model)
         {
             Model = model;
             SetUpCommands();
@@ -78,7 +79,7 @@ namespace PracticeManagement.MAUI.ViewModels
 
         public TimeEntryViewModel()
         {
-            Model = new Time();
+            Model = new TimeDTO();
             SetUpCommands();
         }
 

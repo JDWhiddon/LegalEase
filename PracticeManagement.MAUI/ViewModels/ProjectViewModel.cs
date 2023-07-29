@@ -122,7 +122,7 @@ namespace PracticeManagement.MAUI.ViewModels
         }
         public void GenerateBill()
         {
-            Bill bill = new Bill();
+            BillDTO bill = new BillDTO();
             bill.ProjectId = Model.Id;
             bill.ClientId = Model.ClientId;
             bill.DueDate = DateTime.Today.AddDays(14);

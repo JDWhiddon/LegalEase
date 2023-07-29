@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using PracticeManagement.CLI.Models;
+using PracticeManagement.Library.DTO;
 using PracticeManagement.Library.Models;
 using PracticeManagement.Library.Services;
 
@@ -17,11 +18,11 @@ namespace PracticeManagement.MAUI.ViewModels
     {
         public BillViewModel()
         {
-            Model = new Bill();
+            Model = new BillDTO();
             SetUpCommands();
 
         }
-        public BillViewModel(Bill bill)
+        public BillViewModel(BillDTO bill)
         {
             Model = bill;
             SetUpCommands();
@@ -39,13 +40,13 @@ namespace PracticeManagement.MAUI.ViewModels
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-        public Bill Model { get; set; }
+        public BillDTO Model { get; set; }
 
-        public ObservableCollection<Bill> Bills
+        public ObservableCollection<BillDTO> Bills
         {
             get
             {
-                return new ObservableCollection<Bill>(BillService.Current.ListOfBills);
+                return new ObservableCollection<BillDTO>(BillService.Current.ListOfBills);
             }
         }
 

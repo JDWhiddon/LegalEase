@@ -1,4 +1,8 @@
-﻿using PracticeManagement.Library.Models;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Bson;
+using PracticeManagement.Library.DTO;
+using PracticeManagement.Library.Models;
+using PracticeManagement.Library.Utilities;
 
 namespace PracticeManagement.Library.Services
 {
@@ -22,48 +26,67 @@ namespace PracticeManagement.Library.Services
             }
         }
 
-        private List<Bill> listOfBills;
+        private List<BillDTO> listOfBills;
 
         private BillService()
         {
-            listOfBills = new List<Bill> {
-                new Bill {Id = 1, ClientId = 1, ProjectId = 1, TotalAmount = 100M}
-            };
+            var response = new WebRequestHandler()
+                .Get($"/Bill/GetBills")
+                .Result;
+            listOfBills = JsonConvert
+                .DeserializeObject<List<BillDTO>>(response)
+                ?? new List<BillDTO>();
         }
 
-        public List<Bill> ListOfBills
+        public void RefreshBills()
+        {
+            var response = new WebRequestHandler()
+                .Get($"/Bill/GetBills")
+                .Result;
+            listOfBills = JsonConvert
+                .DeserializeObject<List<BillDTO>>(response)
+                ?? new List<BillDTO>();
+
+        }
+        public List<BillDTO> ListOfBills
         {
             get
             {
                 return listOfBills;
             }
         }
-        public Bill? Get(int id) => ListOfBills.FirstOrDefault(e => e.Id == id);
+        public BillDTO? Get(int id) => ListOfBills.FirstOrDefault(e => e.Id == id);
 
-        public void AddOrUpdate(Bill? bill)
+        public void AddOrUpdate(BillDTO? bill)
         {
-            if (bill.Id == 0)
+            var response = new WebRequestHandler().Post("/Bill", bill).Result;
+            var myUpdatedBill = JsonConvert.DeserializeObject<BillDTO>(response);
+            if (myUpdatedBill != null)
             {
-                //add
-                bill.Id = LastId + 1;
-                listOfBills.Add(bill);
+                var existingBill = listOfBills.FirstOrDefault(c => c.Id == myUpdatedBill.Id);
+                if (existingBill == null)
+                {
+                    listOfBills.Add(myUpdatedBill);
+                }
+                else
+                {
+                    var index = listOfBills.IndexOf(existingBill);
+                    listOfBills.RemoveAt(index);
+                    listOfBills.Insert(index, myUpdatedBill);
+                }
             }
+            RefreshBills();
         }
 
-        private int LastId
-        {
-            get
-            {
-                return ListOfBills.Any() ? ListOfBills.Select(c => c.Id).Max() : 1;
-            }
-        }
+       
 
         public void Delete(int id)
         {
+            var response = new WebRequestHandler().Delete($"/Bill/Delete/{id}").Result;
             var billToRemove = Get(id);
             if (billToRemove != null)
             {
-                listOfBills.Remove(billToRemove);
+                ListOfBills.Remove(billToRemove);
             }
         }
 

@@ -7,15 +7,17 @@ using PracticeManagement.Library.Models;
 
 namespace PracticeManagement.API.EC
 {
-    public class EmployeeEC
+    public class BillEC
     {
-        public EmployeeDTO AddOrUpdate(EmployeeDTO dto)
+        public BillDTO AddOrUpdate(BillDTO dto)
         {
             if (dto.Id <= 0)
             {
                 using (var context = new EfContextFactory().CreateDbContext(new string[0]))
                 {
-                    context.Employees.Add(new Employee(dto));
+                    Bill bill = new Bill();
+                    bill.DueDate = DateTime.Today.AddDays(14);
+                    context.Bills.Add(new Bill(dto));
                     context.SaveChanges();
                 }
             }
@@ -23,40 +25,43 @@ namespace PracticeManagement.API.EC
             {
                 using (var context = new EfContextFactory().CreateDbContext(new string[0]))
                 {
-                    var employee = context.Employees.FirstOrDefault(c => c.Id == dto.Id);
-                    employee.Name = dto.Name;
-                    employee.Rate = dto.Rate;
+                    var bill = context.Bills.FirstOrDefault(c => c.Id == dto.Id);
+                    bill.Id = dto.Id;
+                    bill.ClientId = dto.ClientId;
+                    bill.ProjectId = dto.ProjectId;
+                    bill.TotalAmount = dto.TotalAmount;
+                    bill.DueDate = dto.DueDate;
+                    bill.Paid = dto.Paid;
                     context.SaveChanges();
                 }
+
             }
             return dto;
         }
 
-        public IEnumerable<EmployeeDTO> Search(string query = "")
+        public IEnumerable<BillDTO> Search(string query = "")
         {
             using (var context = new EfContextFactory().CreateDbContext(new string[0]))
             {
-                List<Employee> result = context.Employees.ToList();
+                List<Bill> result = context.Bills.ToList();
                 return result
-                    .Where(c => c.Name.ToUpper()
-                    .Contains(query.ToUpper()))
                     .Take(1000)
-                    .Select(c => new EmployeeDTO(c));
+                    .Select(c => new BillDTO(c));
             }
         }
 
-        public EmployeeDTO? Delete(int id)
+        public BillDTO? Delete(int id)
         {
             using (var context = new EfContextFactory().CreateDbContext(new string[0]))
             {
-                var employeeToRemove = context.Employees.FirstOrDefault(c => c.Id == id);
-                if (employeeToRemove != null)
+                var billToDelete = context.Bills.FirstOrDefault(c => c.Id == id);
+                if (billToDelete != null)
                 {
-                    context.Employees.Remove(employeeToRemove);
+                    context.Bills.Remove(billToDelete);
                     context.SaveChanges();
                 }
             }
-            return new EmployeeDTO();
+            return new BillDTO();
         }
     }
 }

@@ -1,12 +1,16 @@
-﻿
-using PracticeManagement.Library.DTO;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using PracticeManagement.Library.Models;
 
-namespace PracticeManagement.Library.Models
+namespace PracticeManagement.Library.DTO
 {
-    public class Bill
+    public class BillDTO
     {
-        public Bill() { }
-        public Bill(BillDTO b)
+        public BillDTO() { }
+        public BillDTO(Bill b)
         {
             this.Id = b.Id;
             this.ClientId = b.ClientId;
@@ -15,6 +19,7 @@ namespace PracticeManagement.Library.Models
             this.DueDate = b.DueDate;
             this.Paid = b.Paid;
         }
+        
         public int Id { get; set; }
         public int ClientId { get; set; }
         public int ProjectId { get; set; }
@@ -23,7 +28,7 @@ namespace PracticeManagement.Library.Models
         public bool Paid { get; set; }
         public override string ToString()
         {
-            return $"Total: ${Math.Round(TotalAmount,2)} Project: {ProjectId} Due: {DueDate}";
+            return $"Total: ${Math.Round(TotalAmount, 2)} Project: {ProjectId} Due: {DueDate}";
         }
 
     }

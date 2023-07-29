@@ -12,6 +12,8 @@ namespace PracticeManagement.API.Database
         public DbSet<Client> Clients { get; set; }
         public DbSet<Project> Projects { get; set; }
         public DbSet<Employee> Employees { get; set; }
+        public DbSet<Time> Times { get; set; }
+        public DbSet<Bill> Bills { get; set; }
 
     }
 }

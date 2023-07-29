@@ -1,5 +1,8 @@
-﻿using PracticeManagement.CLI.Models;
+﻿using Newtonsoft.Json;
+using PracticeManagement.CLI.Models;
+using PracticeManagement.Library.DTO;
 using PracticeManagement.Library.Models;
+using PracticeManagement.Library.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,27 +32,50 @@ namespace PracticeManagement.Library.Services
             }
         }
 
-        List<Time> listOfTimes;
+        List<TimeDTO> listOfTimes;
         private TimeService()
         {
-            listOfTimes = new List<Time> {
-                new Time {Id = 1, Hours = 1.0M, EmployeeId = 1, ProjectId = 1 },
-                new Time {Id = 2, Hours = 1.25M, EmployeeId = 1, ProjectId = 1 }
-            };
+            var response = new WebRequestHandler()
+                .Get($"/Time/GetTimes")
+                .Result;
+            listOfTimes = JsonConvert
+                .DeserializeObject<List<TimeDTO>>(response)
+                ?? new List<TimeDTO>();
         }
 
-        public void AddOrUpdate(Time time)
+        public void AddOrUpdate(TimeDTO time)
         {
-            if (time.Id == 0)
+            var response = new WebRequestHandler().Post("/Time", time).Result;
+            var myUpdatedTime = JsonConvert.DeserializeObject<TimeDTO>(response);
+            if (myUpdatedTime != null)
             {
-                time.Id = LastId + 1;
-                listOfTimes.Add(time);
+                var existingTime = listOfTimes.FirstOrDefault(c => c.Id == myUpdatedTime.Id);
+                if (existingTime == null)
+                {
+                    listOfTimes.Add(myUpdatedTime);
+                }
+                else
+                {
+                    var index = listOfTimes.IndexOf(existingTime);
+                    listOfTimes.RemoveAt(index);
+                    listOfTimes.Insert(index, myUpdatedTime);
+                }
             }
+            RefreshTimeList();
+        }
+        public void RefreshTimeList()
+        {
+            var response = new WebRequestHandler()
+                .Get($"/Time/GetTimes")
+                .Result;
+            listOfTimes = JsonConvert
+                .DeserializeObject<List<TimeDTO>>(response)
+                ?? new List<TimeDTO>();
         }
 
-        public Time? Get(int id) => listOfTimes.FirstOrDefault(e => e.Id == id);
+        public TimeDTO? Get(int id) => listOfTimes.FirstOrDefault(e => e.Id == id);
 
-        public List<Time> ListOfTimes
+        public List<TimeDTO> ListOfTimes
         {
             get
             {
@@ -57,19 +83,13 @@ namespace PracticeManagement.Library.Services
             }
         }
 
-        private int LastId
-        {
-            get
-            {
-                return ListOfTimes.Any() ? ListOfTimes.Select(c => c.Id).Max() : 1;
-            }
-        }
         public void Delete(int id)
         {
+            var response = new WebRequestHandler().Delete($"/Time/Delete/{id}").Result;
             var timeToRemove = Get(id);
             if (timeToRemove != null)
             {
-                listOfTimes.Remove(timeToRemove);
+                ListOfTimes.Remove(timeToRemove);
             }
         }
 

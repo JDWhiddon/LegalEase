@@ -3,14 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using PracticeManagement.Library.DTO;
+using PracticeManagement.Library.Models;
 
-namespace PracticeManagement.Library.Models
+namespace PracticeManagement.Library.DTO
 {
-    public class Time
+    public class TimeDTO
     {
-        public Time() { }
-        public Time(TimeDTO c) 
+
+        public TimeDTO() { }
+        public TimeDTO(Time c)
         {
             this.Date = c.Date;
             this.Narrative = c.Narrative;
@@ -19,10 +20,10 @@ namespace PracticeManagement.Library.Models
             this.EmployeeId = c.EmployeeId;
             this.Id = c.Id;
             this.Billed = c.Billed;
-        }
+        }   
         public DateTime Date { get; set; }
         public string? Narrative { get; set; }
-        public decimal Hours { get; set; }  
+        public decimal Hours { get; set; }
         public int ProjectId { get; set; }
         public int EmployeeId { get; set; }
         public int Id { get; set; }
