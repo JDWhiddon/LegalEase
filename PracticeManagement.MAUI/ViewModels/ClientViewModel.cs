@@ -66,6 +66,7 @@ namespace PracticeManagement.MAUI.ViewModels
             NotifyPropertyChanged("Clients");
         }
 
+
         public void DeleteProject()
         {
             if (SelectedProject == null || SelectedProject.Model.IsActive == true)

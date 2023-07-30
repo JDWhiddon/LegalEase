@@ -21,7 +21,7 @@ public partial class EmployeeDetailView : ContentPage
     }
     private void OkClicked(object sender, EventArgs e)
     {
-        (BindingContext as EmployeeViewModel).AddOrUpdate();
+        (BindingContext as EmployeeViewModel).ExecuteAddOrUpdate();
         Shell.Current.GoToAsync("//Employees");
     }
 

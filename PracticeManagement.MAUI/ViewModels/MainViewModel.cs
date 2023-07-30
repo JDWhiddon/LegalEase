@@ -107,7 +107,6 @@ namespace PracticeManagement.MAUI.ViewModels
         }
         public void Search()
         {
-
             NotifyPropertyChanged("Clients");
         }
 

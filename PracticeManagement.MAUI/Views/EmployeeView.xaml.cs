@@ -12,7 +12,7 @@ public partial class EmployeeView : ContentPage
 
     private void DeleteClicked(object sender, EventArgs e)
     {
-        (BindingContext as EmployeeViewModel).Delete();
+        (BindingContext as EmployeeViewModel).RefreshEmployees();
     }
 
     private void SearchClicked(object sender, EventArgs e)
@@ -25,9 +25,15 @@ public partial class EmployeeView : ContentPage
         Shell.Current.GoToAsync("//MainPage");
     }
 
-    private void AddClicked(object sender, EventArgs e)
+    private void AddEmployeeClicked(object sender, EventArgs e)
     {
-        Shell.Current.GoToAsync("//EmployeeDetails");
+        (BindingContext as EmployeeViewModel).ToggleAddingEmployee();
+    }
+    private void SaveClicked(object sender, EventArgs e)
+    {
+        (BindingContext as EmployeeViewModel).ExecuteAdd();
+        (BindingContext as EmployeeViewModel).ToggleAddingEmployee();
+        (BindingContext as EmployeeViewModel).RefreshEmployees();
     }
     private void EditClicked(object sender, EventArgs e)
     {

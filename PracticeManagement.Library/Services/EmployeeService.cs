@@ -58,19 +58,19 @@ namespace PracticeManagement.Library.Services
         public void AddOrUpdate(EmployeeDTO? employeeDTO)
         {
             var response = new WebRequestHandler().Post("/Employee", employeeDTO).Result;
-            var myUpdatedClient = JsonConvert.DeserializeObject<EmployeeDTO>(response);
-            if (myUpdatedClient != null)
+            var myUpdatedEmployee = JsonConvert.DeserializeObject<EmployeeDTO>(response);
+            if (myUpdatedEmployee != null)
             {
-                var existingClient = listOfEmployees.FirstOrDefault(c => c.Id == myUpdatedClient.Id);
-                if (existingClient == null)
+                var existingEmployee = listOfEmployees.FirstOrDefault(c => c.Id == myUpdatedEmployee.Id);
+                if (existingEmployee == null)
                 {
-                    listOfEmployees.Add(myUpdatedClient);
+                    listOfEmployees.Add(myUpdatedEmployee);
                 }
                 else
                 {
-                    var index = listOfEmployees.IndexOf(existingClient);
+                    var index = listOfEmployees.IndexOf(existingEmployee);
                     listOfEmployees.RemoveAt(index);
-                    listOfEmployees.Insert(index, myUpdatedClient);
+                    listOfEmployees.Insert(index, myUpdatedEmployee);
                 }
             }
             RefreshEmployeeList();

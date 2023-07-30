@@ -18,30 +18,25 @@ namespace PracticeManagement.MAUI.ViewModels
         }
 
 
-        public ObservableCollection<EmployeeDTO> Employees
+        public ObservableCollection<EmployeeViewModel> Employees
         {
             get
             {
                 if (string.IsNullOrEmpty(Query))
                 {
-                    return new ObservableCollection<EmployeeDTO>(EmployeeService.Current.ListOfEmployees);
+                    return new ObservableCollection<EmployeeViewModel>(EmployeeService
+                        .Current.ListOfEmployees
+                        .Select(r => new EmployeeViewModel(r)));
                 }
-                return new ObservableCollection<EmployeeDTO>(EmployeeService.Current.Search(Query));
+                List<EmployeeDTO> searchResults = EmployeeService.Current.Search(Query);
+                return new ObservableCollection<EmployeeViewModel>(searchResults.Select(r => new EmployeeViewModel(r)));
             }
         }
 
-        public EmployeeDTO SelectedEmployee { get; set; }
+
+        public Employee SelectedEmployee { get; set; }
 
         public EmployeeDTO Model { get; set; }
-        public void Delete()
-        {
-            if (SelectedEmployee == null)
-            {
-                return;
-            }
-            EmployeeService.Current.Delete(SelectedEmployee.Id);
-            NotifyPropertyChanged("Employees");
-        }
 
         public string Query { get; set; }
 
@@ -52,15 +47,44 @@ namespace PracticeManagement.MAUI.ViewModels
 
         public ICommand DeleteCommand { get; private set; }
         public ICommand EditCommand { get; private set; }
+        public ICommand AddOrUpdateCommand { get; private set; }
+        public ICommand SearchCommand { get; private set; }
 
-        public void ExecuteDelete(int id)
+        public void ExecuteDelete()
         {
-            EmployeeService.Current.Delete(id);
+            EmployeeService.Current.Delete(Model.Id);
+            EmployeeService.Current.RefreshEmployeeList();
+            NotifyPropertyChanged("Employees");
         }
 
-        public void ExecuteEdit(int id)
+        public void RefreshEmployees()
         {
-            Shell.Current.GoToAsync($"//EmployeeDetails?employeeId={id}");
+            NotifyPropertyChanged("Employees");
+        }
+        public void ExecuteAdd()
+        {
+            EmployeeDTO newEmployee = new EmployeeDTO()
+            {
+                Name = NewEmployeeName,
+                Rate = NewEmployeeRate
+            };
+            EmployeeService.Current.AddOrUpdate(newEmployee);
+            EmployeeService.Current.RefreshEmployeeList();
+            NewEmployeeName = string.Empty;
+            NewEmployeeRate = 0;
+        }
+
+        public void ExecuteAddOrUpdate()
+        {
+            EmployeeService.Current.AddOrUpdate(Model);
+
+        }
+
+        public void ExecuteEdit()
+        {
+            Shell.Current.GoToAsync($"//EmployeeDetails?employeeId={Model.Id}");
+            EmployeeService.Current.RefreshEmployeeList();
+
         }
         public void Edit()
         {
@@ -68,8 +92,6 @@ namespace PracticeManagement.MAUI.ViewModels
             {
                 return;
             }
-            ExecuteEdit(SelectedEmployee.Id);
-            NotifyPropertyChanged("Employee");
         }
         public EmployeeViewModel()
         {
@@ -77,38 +99,130 @@ namespace PracticeManagement.MAUI.ViewModels
             SetupCommands();
         }
 
-        public EmployeeViewModel(int employeeId)
+        public EmployeeViewModel(EmployeeDTO dto)
         {
-          if (employeeId > 0)
+            Model = dto;
+            SetupCommands();
+        }
+
+        public EmployeeViewModel(int id)
+        {
+            if (id >= 0)
             {
-                Model = EmployeeService.Current.Get(employeeId);
+                Model = EmployeeService.Current.Get(id);
             }
             else
             {
                 Model = new EmployeeDTO();
             }
-
-            SetupCommands();
         }
+        public string Display
+        {
+            get
+            {
+                return Model.ToString() ?? string.Empty;
+            }
+        }
+
+
 
         public void SetupCommands()
         {
-            DeleteCommand = new Command(
-                (c) => ExecuteDelete((c as ClientViewModel).Model.Id));
-
-            EditCommand = new Command(
-                (c) => ExecuteEdit((c as ClientViewModel).Model.Id));
+            EditCommand = new Command(ExecuteEdit);
+            DeleteCommand = new Command(ExecuteDelete);
+            AddOrUpdateCommand = new Command(ExecuteAddOrUpdate);
+            SearchCommand = new Command(ExecuteSearch);
         }
 
-        public void AddOrUpdate()
+        public void ExecuteSearch()
         {
-            EmployeeService.Current.AddOrUpdate(Model);
             RefreshEmployeeList();
         }
+
 
         public void RefreshEmployeeList()
         {
             NotifyPropertyChanged("Employees");
+        }
+
+        public void ToggleAddingEmployee()
+        {
+            if (EntryIsVisible == true)
+            {
+                EntryIsVisible = false;
+                RateIsVisible = false;
+                AddIsVisible = true;
+            }
+            else if (EntryIsVisible == false)
+            {
+                EntryIsVisible = true;
+                AddIsVisible = false;
+                RateIsVisible = true;
+            }
+
+        }
+
+        private bool rateIsVisible = false;
+        private bool entryIsVisible = false;
+        private bool addIsVisible = true;
+        private string newEmployeeName = string.Empty;
+        private decimal newEmployeeRate = 0;
+
+        public string NewEmployeeName
+        {
+            get => newEmployeeName;
+            set
+            {
+                if (newEmployeeName == value) return;
+                newEmployeeName = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(NewEmployeeName)));
+            }
+        }
+
+        public decimal NewEmployeeRate
+        {
+            get =>newEmployeeRate;
+            set
+            {
+                if (newEmployeeRate == value) return;
+                newEmployeeRate = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(NewEmployeeRate)));
+            }
+        }
+
+
+
+        public bool EntryIsVisible
+        {
+            get => entryIsVisible;
+            set
+            {
+                if (entryIsVisible == value) return;
+                entryIsVisible = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(EntryIsVisible)));
+            }
+        }
+
+        public bool RateIsVisible
+        {
+            get => rateIsVisible;
+            set
+            {
+                if (rateIsVisible == value) return;
+                rateIsVisible = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(RateIsVisible)));
+            }
+        }
+
+        public bool AddIsVisible
+        {
+            get => addIsVisible;
+            set
+            {
+                if (addIsVisible == value) return;
+                addIsVisible = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(AddIsVisible)));
+            }
         }
 
     }
