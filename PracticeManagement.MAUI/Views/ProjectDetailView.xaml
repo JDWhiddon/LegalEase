@@ -108,7 +108,7 @@
                                         <ColumnDefinition Width="12*"/>
                                         <ColumnDefinition/>
                                     </Grid.ColumnDefinitions>
-                                    <Label Grid.Column="0" VerticalTextAlignment="Center" Text="{Binding Display}"></Label>
+                                    <Label Style="{StaticResource contentLabelStyle}" Grid.Column="0" VerticalTextAlignment="Center" Text="{Binding Display}"></Label>
                                 </Grid>
                             </ViewCell>
                         </DataTemplate>

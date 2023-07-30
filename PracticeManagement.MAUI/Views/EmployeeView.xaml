@@ -86,7 +86,7 @@
             </Frame>
             <Grid Grid.Row="2">
                 <Button Grid.Column="1"
-                    Text="Add Client"
+                    Text="Add Employee"
                     Clicked="AddEmployeeClicked"
                     IsVisible="{Binding AddIsVisible}"
                     Margin="100,0,100,0"

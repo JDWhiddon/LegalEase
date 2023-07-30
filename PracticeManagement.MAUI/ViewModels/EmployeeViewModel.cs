@@ -72,6 +72,7 @@ namespace PracticeManagement.MAUI.ViewModels
             EmployeeService.Current.RefreshEmployeeList();
             NewEmployeeName = string.Empty;
             NewEmployeeRate = 0;
+            SetupCommands();
         }
 
         public void ExecuteAddOrUpdate()

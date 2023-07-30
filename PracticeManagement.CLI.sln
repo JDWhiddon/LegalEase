@@ -5,9 +5,9 @@ VisualStudioVersion = 17.6.33712.159
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PracticeManagement.CLI", "PracticeManagement.Console\PracticeManagement.CLI.csproj", "{B03DA6D0-E611-4997-80B9-7B4DD89500C4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PracticeManagement.Library", "PracticeManagement.Library\PracticeManagement.Library.csproj", "{196F4008-1F62-4DC7-B909-31573E3AB63F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PracticeManagement.Library", "PracticeManagement.Library\PracticeManagement.Library.csproj", "{196F4008-1F62-4DC7-B909-31573E3AB63F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PracticeManagement.MAUI", "PracticeManagement.MAUI\PracticeManagement.MAUI.csproj", "{58D1B588-5D07-4DBD-BD30-23B0889B1382}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PracticeManagement.MAUI", "PracticeManagement.MAUI\PracticeManagement.MAUI.csproj", "{58D1B588-5D07-4DBD-BD30-23B0889B1382}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

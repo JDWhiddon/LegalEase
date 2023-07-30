@@ -98,6 +98,7 @@ namespace PracticeManagement.MAUI.ViewModels
             ClientService.Current.AddOrUpdate(_client);
             NewClientName = string.Empty;
             RefreshClients();
+            SetupCommands();
         }
         public void ExecuteAddProject()
         {

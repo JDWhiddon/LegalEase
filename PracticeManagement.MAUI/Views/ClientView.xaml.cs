@@ -32,6 +32,7 @@ public partial class ClientView : ContentPage
     {
         (BindingContext as MainViewModel).ExecuteAddClient();
         (BindingContext as MainViewModel).ToggleAddingClient();
+        (BindingContext as MainViewModel).RefreshClients();
     }
 
 

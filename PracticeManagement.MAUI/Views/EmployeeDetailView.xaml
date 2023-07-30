@@ -4,33 +4,64 @@
              x:Class="PracticeManagement.MAUI.Views.EmployeeDetailView"
              Title="EmployeeDetailView"
              NavigatedTo="OnArrived">
-    <VerticalStackLayout>
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style TargetType="ListView" x:Key="listviewStyle">
+            </Style>
+            <Style TargetType="Label" x:Key="headingLabelStyle">
+                <Setter Property="FontSize" Value="20"></Setter>
+                <Setter Property="HorizontalOptions" Value="Center"></Setter>
+                <Setter Property="Padding" Value="0,15,0,0"></Setter>
+                <Setter Property="TextColor" Value="White"></Setter>
+                <Setter Property="FontFamily" Value="RemRegular"></Setter>
+            </Style>
+            <Style TargetType="Label" x:Key="contentLabelStyle">
+                <Setter Property="TextColor" Value="Black"></Setter>
+                <Setter Property="FontFamily" Value="RemRegular"></Setter>
+            </Style>
+            <Style TargetType="Frame" x:Key="frameStyle">
+                <Setter Property="BackgroundColor" Value="#E7E7E7"></Setter>
+                <Setter Property="BorderColor" Value="Black"></Setter>
+                <Setter Property="CornerRadius" Value="10"></Setter>
+                <Setter Property="Margin" Value="0,10,100,10"></Setter>
+                <Setter Property="HeightRequest" Value="250"></Setter>
+            </Style>
+            <Style TargetType="Frame" x:Key="thinFrameStyle">
+                <Setter Property="BackgroundColor" Value="#E7E7E7"></Setter>
+                <Setter Property="BorderColor" Value="Black"></Setter>
+                <Setter Property="CornerRadius" Value="10"></Setter>
+                <Setter Property="HeightRequest" Value="70"/>
+                <Setter Property="Margin" Value="0,5,100,10"/>
+                <Setter Property="Padding" Value="0,14,0,0"/>
+            </Style>
+            <Style TargetType="ImageButton" x:Key="imageButtonStyle">
+                <Setter Property="Scale" Value=".5"></Setter>
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <VerticalStackLayout BackgroundColor="#1B2F3D" Padding="10">
+
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
-                <ColumnDefinition Width="11*"/>
+                <ColumnDefinition Width="10*"/>
             </Grid.ColumnDefinitions>
-            <Label Grid.Column="0"
-            Text="Name"/>
-            <Entry Grid.Column="1" Text="{Binding Path=Model.Name}"/>
+            <Label Grid.Column="0" Style="{StaticResource headingLabelStyle}" Text="Hours"/>
+            <Frame Grid.Column="1" Style="{StaticResource thinFrameStyle}">
+                <Entry Style="{StaticResource contentLabelStyle}" Text="{Binding Path=Model.Name}" VerticalOptions="Start"/>
+            </Frame>
         </Grid>
+
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
-                <ColumnDefinition Width="11*"/>
+                <ColumnDefinition Width="10*"/>
             </Grid.ColumnDefinitions>
-            <Label Grid.Column="0"
-            Text="Rate"/>
-            <Entry Grid.Column="1" Text="{Binding Path=Model.Rate}"/>
+            <Label Grid.Column="0" Style="{StaticResource headingLabelStyle}" Text="EmployeeId"/>
+            <Frame Grid.Column="1" Style="{StaticResource thinFrameStyle}">
+                <Entry Style="{StaticResource contentLabelStyle}" Text="{Binding Path=Model.Rate}" VerticalOptions="Start"/>
+            </Frame>
         </Grid>
-        
-        <Grid Grid.Row="0">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-            </Grid.ColumnDefinitions>
-            <Button Grid.Column="0" Text="Ok" Clicked="OkClicked"></Button>
-            <Button Grid.Column="1" Text="Go Back" Clicked="CancelClicked"></Button>
-        </Grid>
+        <Button Text="OK" Clicked="OkClicked" Margin="0,20,0,0"/>
     </VerticalStackLayout>
 </ContentPage>

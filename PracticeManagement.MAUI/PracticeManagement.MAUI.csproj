@@ -55,6 +55,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <MauiXaml Remove="Resources\Styles\Thickness.xaml" />
 	  <MauiXaml Remove="Views\ClientDetails.xaml" />
 	</ItemGroup>
 
