@@ -97,6 +97,7 @@ namespace PracticeManagement.MAUI.ViewModels
             };
             ClientService.Current.AddOrUpdate(_client);
             NewClientName = string.Empty;
+            SetupCommands();
             RefreshClients();
             SetupCommands();
         }

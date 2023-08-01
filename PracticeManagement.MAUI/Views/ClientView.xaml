@@ -40,7 +40,6 @@
 
             <Grid Grid.Row="0">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="8*"/>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
                 <Entry Grid.Column="0" 
@@ -50,7 +49,6 @@
                        TextColor="White"
                        FontFamily="RemRegular"
                        ReturnCommand="{Binding SearchCommand}"></Entry>
-                <Button Grid.Column="1" Text="Add"></Button>
             </Grid>
 
             <!-- Frame containing the ListView -->
