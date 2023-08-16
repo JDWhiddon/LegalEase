@@ -32,7 +32,7 @@ namespace PracticeManagement.Library.DTO
 
         public override string ToString()
         {
-            return $"Id: {Id} - {LongName} Active: {IsActive}";
+            return $"Id: {Id} - {LongName} \nActive: {IsActive}";
         }
     }
 }

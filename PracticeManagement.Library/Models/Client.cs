@@ -29,11 +29,9 @@ namespace PracticeManagement.CLI.Models
         public string? Name { get; set; }
         public string? Notes { get; set; }
 
-        private List<Client>? clients { get; set; }
-
         public override string ToString()
         {
-            return $"Id: {Id} Name: {Name}";
+            return $"Id: {Id} - {Name}";
         }
 
     }
