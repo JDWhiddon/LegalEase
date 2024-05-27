@@ -45,20 +45,23 @@ namespace PracticeManagement.Library.Services
 
         public void AddOrUpdate(TimeDTO time)
         {
-            var response = new WebRequestHandler().Post("/Time", time).Result;
-            var myUpdatedTime = JsonConvert.DeserializeObject<TimeDTO>(response);
-            if (myUpdatedTime != null)
+            if (EmployeeService.Current.Get(time.EmployeeId) != null)
             {
-                var existingTime = listOfTimes.FirstOrDefault(c => c.Id == myUpdatedTime.Id);
-                if (existingTime == null)
+                var response = new WebRequestHandler().Post("/Time", time).Result;
+                var myUpdatedTime = JsonConvert.DeserializeObject<TimeDTO>(response);
+                if (myUpdatedTime != null)
                 {
-                    listOfTimes.Add(myUpdatedTime);
-                }
-                else
-                {
-                    var index = listOfTimes.IndexOf(existingTime);
-                    listOfTimes.RemoveAt(index);
-                    listOfTimes.Insert(index, myUpdatedTime);
+                    var existingTime = listOfTimes.FirstOrDefault(c => c.Id == myUpdatedTime.Id);
+                    if (existingTime == null)
+                    {
+                        listOfTimes.Add(myUpdatedTime);
+                    }
+                    else
+                    {
+                        var index = listOfTimes.IndexOf(existingTime);
+                        listOfTimes.RemoveAt(index);
+                        listOfTimes.Insert(index, myUpdatedTime);
+                    }
                 }
             }
             RefreshTimeList();
